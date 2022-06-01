@@ -25,14 +25,15 @@ const i18nextMiddleware = require("i18next-http-middleware");
 const Backend = require("i18next-fs-backend");
 
 i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).init({
+    debug: true,
     detection: {
         ignoreCase: true,
         order: ['path', 'session', 'querystring', 'header']
     },
     initImmediate: false, // setting initImediate to false, will load the resources synchronously
+    load: 'languageOnly',
     whitelist: ['de', 'en'],
     nonExplicitWhitelist: true,
-    load: 'languageOnly',
     fallbackLng: 'en',
     preload: ['de', 'en'],
     backend: {
