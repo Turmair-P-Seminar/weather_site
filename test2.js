@@ -1,6 +1,6 @@
-const express = require('express');
+var express = require('express');
 
-const app = express();
+var app = express();
 
 const path = require("path");
 
@@ -9,6 +9,7 @@ const port = 3000;
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.set("port", port)
 
 // app.get('/', function(req, res) {
 //     console.log('Hello i18n');
@@ -26,7 +27,7 @@ const Backend = require("i18next-fs-backend");
 i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).init({
     detection: {
         ignoreCase: true,
-        order: ['session', 'querystring', 'header']
+        order: ['path', 'session', 'querystring', 'header']
     },
     initImmediate: false, // setting initImediate to false, will load the resources synchronously
     whitelist: ['de', 'en'],
@@ -38,21 +39,22 @@ i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).init({
         loadPath: './res/locales/{{lng}}/main.json'
     }
 }, function() {
-    //  i18nextMiddleware.addRoute(i18n, '/:lng/path2/', ['de', 'en'], app, 'get', function(req, res) { //route.products/route.harddrives/route.overview
-    //      console.log(req.i18n.languages[0]);
-    //      //req.i18n.changeLanguage(req.i18n.languages[0]);
-    //      res.render("index", {title: i18n.t("test-title")});
-    // });
+     i18nextMiddleware.addRoute(i18n, '/:lng/path2/', ['de', 'en'], app, 'get', function(req, res) { //route.products/route.harddrives/route.overview
+         console.log(i18n.languages[0]);
+         console.log(i18n.languages);
+         i18n.changeLanguage(i18n.languages[0]);
+         res.render("index", {title: i18n.t("test-title")});
+    });
 });
 
-//app.use(express.bodyParser());
+//app.use(express.bodyParser()); //UNUSED
 app.use(i18nextMiddleware.handle(i18n));
 
-// app.get('/:lng/path2/', (req, res) => { //route.products/route.harddrives/route.overview
-//     //console.log(req.i18n.languages[0]);
-//     //req.i18n.changeLanguage(req.i18n.languages[0]);
-//     res.render("index", {title: i18n.t("test-title")});
-// });
+ app.get('/:lng/path2/', (req, res) => { //route.products/route.harddrives/route.overview
+     //console.log(req.i18n.languages[0]);
+     //req.i18n.changeLanguage(req.i18n.languages[0]);
+     res.render("index", {title: i18n.t("test-title")});
+ });
 
 app.get('/:lng/', (req, res) => {
     //var lng = req.language // 'de-CH'
