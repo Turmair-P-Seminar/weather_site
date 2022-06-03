@@ -1,39 +1,54 @@
-var express = require('express');
-
-var app = express();
-
+const fs = require('fs');
 const path = require("path");
-
-const hostname = '127.0.0.1';
-const port = 3000;
-
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
-app.set("port", port)
-
-// app.get('/', function(req, res) {
-//     console.log('Hello i18n');
-//     res.render('index.ejs');
-// });
-
-app.listen(app.get("port"), function (){
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
-
+const http = require('http');
+const https = require('https');
+const express = require('express');
 const i18n = require("i18next");
 const i18nextMiddleware = require("i18next-http-middleware");
 const Backend = require("i18next-fs-backend");
 
+// Configuration below
+const hostname = '127.0.0.1';
+const port = 80; // Should be 3000 on linux (iptable routing). The Header upgrade below does not seem to be working with ports >999.
+const portSave = 443; // Should be 8433 on linux (iptable routing). The Header upgrade below does not seem to be working with ports >999.
+
+const privateKey = fs.readFileSync('res/https/wetter-turmair-de.key', 'utf8');
+const certificate = fs.readFileSync('res/https/wetter-turmair-de.crt', 'utf8');
+// Configuration above
+
+// Credentials for https
+const credentials = {key: privateKey, cert: certificate};
+
+// http Server. Only exists for session upgrade to https.
+http.createServer(function (req, res) {
+    res.writeHead(308, {'Location': `https://${hostname}:${portSave}` + req.url}); // 308 -> Moved permanently
+    res.end();
+}).listen(port);
+
+// Creates the https server component
+const app = express();
+const httpsServer = https.createServer(credentials, app);
+
+httpsServer.listen(portSave, function (){
+    console.log(`Server running at https://${hostname}:${portSave}/`);
+});
+
+// App config
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+app.set("port", portSave)
+
+// i18next routes
 i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).init({
     debug: true,
     detection: {
         ignoreCase: true,
-        order: ['path', 'session', 'querystring', 'header']
+        order: ['path', 'session', 'header']
     },
     initImmediate: false, // setting initImediate to false, will load the resources synchronously
     load: 'languageOnly',
-    whitelist: ['de', 'en'],
-    nonExplicitWhitelist: true,
+    supportedLngs: ['de', 'en'],
+    nonExplicitSupportedLngs: true,
     fallbackLng: 'en',
     preload: ['de', 'en'],
     backend: {
@@ -48,7 +63,6 @@ i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).init({
     });
 });
 
-//app.use(express.bodyParser()); //UNUSED
 app.use(i18nextMiddleware.handle(i18n));
 
  app.get('/:lng/path2/', (req, res) => { //route.products/route.harddrives/route.overview
