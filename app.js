@@ -24,16 +24,16 @@ const credentials = {key: privateKey, cert: certificate};
 
 // http Server. Only exists for session upgrade to https.
 http.createServer(function (req, res) {
-   res.writeHead(308, {'Location': `https://${hostname}:${portSave}` + req.url}); // 308 -> Moved permanently
-   res.end();
+    res.writeHead(308, {'Location': `https://${hostname}:${portSave}` + req.url}); // 308 -> Moved permanently
+    res.end();
 }).listen(port);
 
 // Creates the https server component
 const app = express();
 const httpsServer = https.createServer(credentials, app);
 
-httpsServer.listen(portSave, function (){
-   console.log(`Server running at https://${hostname}:${portSave}/`);
+httpsServer.listen(portSave, function () {
+    console.log(`Server running at https://${hostname}:${portSave}/`);
 });
 
 app.use(express.static("res"));
@@ -44,46 +44,46 @@ app.set("view engine", "ejs");
 app.set("port", portSave)
 // Cookie config
 app.use(session({
-   cookie: {
-      httpOnly: true,
-      maxAge: 3600000, // 1 hour
-      sameSite: true, // strict
-      secure: true // https only
-   },
-   secret: "This is NOT a secret", //TODO Move to an ENV variable
-   saveUninitialized: false // Who doesn't like EU laws?
+    cookie: {
+        httpOnly: true,
+        maxAge: 3600000, // 1 hour
+        sameSite: true, // strict
+        secure: true // https only
+    },
+    secret: "This is NOT a secret", //TODO Move to an ENV variable
+    saveUninitialized: false // Who doesn't like EU laws?
 }));
 
 // i18next setup
 i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).init({
-   debug: true,
-   detection: {
-      ignoreCase: true,
-      order: ['path', 'session', 'header']
-   },
-   initImmediate: false, // setting initImediate to false, will load the resources synchronously
-   load: 'languageOnly',
-   supportedLngs: supportedLanguages,
-   nonExplicitSupportedLngs: true,
-   fallbackLng: supportedLanguages[0],
-   preload: supportedLanguages,
-   lookupSession: 'lng',
-   backend: {
-      loadPath: './res/locales/{{lng}}/main.json'
-   }
+    debug: true,
+    detection: {
+        ignoreCase: true,
+        order: ['path', 'session', 'header']
+    },
+    initImmediate: false, // setting initImediate to false, will load the resources synchronously
+    load: 'languageOnly',
+    supportedLngs: supportedLanguages,
+    nonExplicitSupportedLngs: true,
+    fallbackLng: supportedLanguages[0],
+    preload: supportedLanguages,
+    lookupSession: 'lng',
+    backend: {
+        loadPath: './res/locales/{{lng}}/main.json'
+    }
 });
 
 app.use(i18nextMiddleware.handle(i18n, {
-   //ignoreRoutes: ['/res*']
+    //ignoreRoutes: ['/res*']
 }));
 
 // Set session
 app.use(function (req, res, next) { // TODO Make this 100% legal
-   if (!req.session.lng) {
-      req.session.lng = req.i18n.language; // The language information is needed to provide functionality, should be ok for EU law without user consent
-   }
-   console.log(req.session);
-   next()
+    if (!req.session.lng) {
+        req.session.lng = req.i18n.language; // The language information is needed to provide functionality, should be ok for EU law without user consent
+    }
+    console.log(req.session);
+    next()
 })
 
 // Add all routes
