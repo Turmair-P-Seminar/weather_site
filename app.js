@@ -15,8 +15,8 @@ const port = 80; // Should be 3000 on linux (iptable routing). The Header upgrad
 const portSave = 443; // Should be 8433 on linux (iptable routing). The Header upgrade below does not seem to be working with ports >999.
 const supportedLanguages = ['en', 'de']; // First is fallback language.
 
-const privateKey = fs.readFileSync('res/https/wetter-turmair-de.key', 'utf8');
-const certificate = fs.readFileSync('res/https/wetter-turmair-de.crt', 'utf8');
+const privateKey = fs.readFileSync('https/wetter-turmair-de.key', 'utf8');
+const certificate = fs.readFileSync('https/wetter-turmair-de.crt', 'utf8');
 // Configuration above
 
 // Credential store for https
