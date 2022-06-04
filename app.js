@@ -4,6 +4,7 @@ import http from 'http';
 import https from 'https';
 import express from 'express';
 import session from 'express-session';
+import createMemoryStore from 'memorystore';
 import i18n from "i18next";
 import i18nextMiddleware from "i18next-http-middleware";
 import Backend from "i18next-fs-backend";
@@ -38,12 +39,18 @@ httpsServer.listen(portSave, function () {
 
 app.use(express.static("res"));
 
+// Create a MemoryStore
+const MemoryStore = createMemoryStore(session);
+
 // App config
 app.set("views", "views");
 app.set("view engine", "ejs");
 app.set("port", portSave)
 // Cookie config
 app.use(session({
+    store: new MemoryStore(session, {
+        checkPeriod: 3600000 // prune expired entries every hour
+    }),
     cookie: {
         httpOnly: true,
         maxAge: 3600000, // 1 hour
@@ -51,6 +58,7 @@ app.use(session({
         secure: true // https only
     },
     secret: "This is NOT a secret", //TODO Move to an ENV variable
+    resave: false,
     saveUninitialized: false // Who doesn't like EU laws?
 }));
 
@@ -87,4 +95,4 @@ app.use(function (req, res, next) { // TODO Make this 100% legal
 })
 
 // Add all routes
-addRoutes(i18nextMiddleware, i18n, supportedLanguages, app);
+addRoutes(i18nextMiddleware, i18n, supportedLanguages, app, hostname, portSave);
