@@ -1,37 +1,90 @@
-const express = require("express");
-const path = require("path");
-const routes = require("./routes");
+import fs from 'fs';
+import path from 'path';
+import http from 'http';
+import https from 'https';
+import express from 'express';
+import session from 'express-session';
+import i18n from "i18next";
+import i18nextMiddleware from "i18next-http-middleware";
+import Backend from "i18next-fs-backend";
+import {addRoutes} from './routes.js';
 
-//const i18next = require("i18next");
-//const Backend = require("i18next-fs-backend");
-//const middleware = require("i18next-http-middleware");
-
-//const i18middle = require("./i18n")
-
+// Configuration below
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = 80; // Should be 3000 on linux (iptable routing). The Header upgrade below does not seem to be working with ports >999.
+const portSave = 443; // Should be 8433 on linux (iptable routing). The Header upgrade below does not seem to be working with ports >999.
+const supportedLanguages = ['en', 'de']; // First is fallback language.
 
-// i18next
-//     .use(middleware.LanguageDetector)
-//     .use(Backend)
-//     .init({
-//         fallbackLng: 'de',
-//         detectLngFromPath: true,
-//         preload: ['en', 'de'],
-//         ns: 'main',
-//         backend: {
-//             loadPath: './res/locales/{{lng}}/{{ns}}.json'
-//         }
-//     });
+const privateKey = fs.readFileSync('res/https/wetter-turmair-de.key', 'utf8');
+const certificate = fs.readFileSync('res/https/wetter-turmair-de.crt', 'utf8');
+// Configuration above
 
+// Credential store for https
+const credentials = {key: privateKey, cert: certificate};
+
+// http Server. Only exists for session upgrade to https.
+http.createServer(function (req, res) {
+   res.writeHead(308, {'Location': `https://${hostname}:${portSave}` + req.url}); // 308 -> Moved permanently
+   res.end();
+}).listen(port);
+
+// Creates the https server component
 const app = express();
-app.set("port", process.env.PORT || 3000);
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+const httpsServer = https.createServer(credentials, app);
 
-//app.use(middleware.handle(i18next));
-app.use(routes);
-//app.use(i18next);
-app.listen(app.get("port"), function (){
-   console.log(`Server running at http://${hostname}:${port}/`);
+httpsServer.listen(portSave, function (){
+   console.log(`Server running at https://${hostname}:${portSave}/`);
 });
+
+app.use(express.static("res"));
+
+// App config
+app.set("views", "views");
+app.set("view engine", "ejs");
+app.set("port", portSave)
+// Cookie config
+app.use(session({
+   cookie: {
+      httpOnly: true,
+      maxAge: 3600000, // 1 hour
+      sameSite: true, // strict
+      secure: true // https only
+   },
+   secret: "This is NOT a secret", //TODO Move to an ENV variable
+   saveUninitialized: false // Who doesn't like EU laws?
+}));
+
+// i18next setup
+i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).init({
+   debug: true,
+   detection: {
+      ignoreCase: true,
+      order: ['path', 'session', 'header']
+   },
+   initImmediate: false, // setting initImediate to false, will load the resources synchronously
+   load: 'languageOnly',
+   supportedLngs: supportedLanguages,
+   nonExplicitSupportedLngs: true,
+   fallbackLng: supportedLanguages[0],
+   preload: supportedLanguages,
+   lookupSession: 'lng',
+   backend: {
+      loadPath: './res/locales/{{lng}}/main.json'
+   }
+});
+
+app.use(i18nextMiddleware.handle(i18n, {
+   //ignoreRoutes: ['/res*']
+}));
+
+// Set session
+app.use(function (req, res, next) { // TODO Make this 100% legal
+   if (!req.session.lng) {
+      req.session.lng = req.i18n.language; // The language information is needed to provide functionality, should be ok for EU law without user consent
+   }
+   console.log(req.session);
+   next()
+})
+
+// Add all routes
+addRoutes(i18nextMiddleware, i18n, supportedLanguages, app);

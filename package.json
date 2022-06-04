@@ -2,6 +2,7 @@
   "name": "weather_site",
   "version": "0.0.1",
   "description": "Turmair weather station data site",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,6 +14,7 @@
   "dependencies": {
     "ejs": "^3.1.8",
     "express": "^4.18.1",
+    "express-session": "^1.17.3",
     "i18n": "^0.15.0",
     "i18next": "^21.8.5",
     "i18next-fs-backend": "^1.1.4",
