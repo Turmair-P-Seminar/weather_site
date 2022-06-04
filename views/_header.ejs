@@ -3,21 +3,46 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
+    <link rel="icon" type="image/vnd.microsoft.icon" href="images/saufen.ico"> </link>
     <title><%= title %></title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"/>
+    <style>
+        .image {
+            height: auto;
+            width: auto;
+            image-rendering: auto;
+        }
+        .high-quality {
+            image-rendering: high-quality;
+        }
+
+    </style>
 </head>
 
-<body>
+
+
 <div class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Node Tutorial</a>
+            <a class="navbar-brand" href="/">Aktuelles Wetter (Symbol)</a>
+            <img class="image high-quality" src="images/nichtpaulsjtg.jpg" alt="Pauls JTG" width="50" height="10">
         </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="/about">About</a></li>
-            <li><a href="/Log In">Log In</a></li>
+        <url class="nav navbar-nav navbar-right">
+            <a href="/about">Link_A</a>
+            <a href="/Log In">Link_B</a>
+            <a href="/Log In">Link_C</a>
         </ul>
+            <select name="Sprache" is="ms-dropdown">
+                <option value="1" data-image="images/de.png">Deutsch</option>
+                <option value="2"><img src="images/en.png"></img></option>
+            </select>
+            <div id="image-dropdown">
+                <input type="radio" id="line1" name="line-style" value="1" checked="checked" />
+                <label for="line1"></label>
+                <input type="radio" id="line2" name="line-style" value="2" />
+                <label for="line2"></label>
+            </div>
     </div>
 </div>
 
