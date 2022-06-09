@@ -16,33 +16,37 @@
         .high-quality {
             image-rendering: high-quality;
         }
-
     </style>
+    <link rel="stylesheet" type="images" href="images/dd.css" />
 </head>
+
+<script src="images/dd.min.js"></script>
 
 
 
 <div class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
+        <img src="images/leichtbewoelkt.jpg" alt="Leicht Bewölkt" width="150" height="100">
+        <h1>15°C</h1>
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Aktuelles Wetter (Symbol)</a>
+
+
+
+
+
             <img class="image high-quality" src="images/nichtpaulsjtg.jpg" alt="Pauls JTG" width="50" height="10">
         </div>
-        <url class="nav navbar-nav navbar-right">
-            <a href="/about">Link_A</a>
-            <a href="/Log In">Link_B</a>
-            <a href="/Log In">Link_C</a>
+        <ul class="nav navbar-nav navbar-right">
+            <a href="/about">Log in</a>
+            <a href="/Log In">About</a>
+            <a href="/Log In">Irgendwas</a>
         </ul>
-            <select name="Sprache" is="ms-dropdown">
-                <option value="1" data-image="images/de.png">Deutsch</option>
-                <option value="2"><img src="images/en.png"></img></option>
+
+
+        <select name="webmenu" id="webmenu">
+                <option value="1">Deutsch</option>
+                <option value="2">English</option>
             </select>
-            <div id="image-dropdown">
-                <input type="radio" id="line1" name="line-style" value="1" checked="checked" />
-                <label for="line1"></label>
-                <input type="radio" id="line2" name="line-style" value="2" />
-                <label for="line2"></label>
-            </div>
     </div>
 </div>
 
