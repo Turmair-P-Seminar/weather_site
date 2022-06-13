@@ -1,18 +1,14 @@
 <%- include ("_header.ejs"); %>
-
-    <img src="images/jtgvorneklein.jpg" alt="Das JTG von vorne"</img>
-    <h4>Über uns</h4>
-    <div class="container">
-        <p>Im Rahmen des P-Seminars "Wetterstation am JTG" haben wir im
-            Schuljahr 2022/23 eine Wetterstation geplant, durch Sponsoring
-            finanziert und gemeinsam Ende Oktober aufgestellt. Nun kann man
-            auf dieser Website die aktuellen Wetterdaten der verschiedenen
-            Sensoren auslesen und einen Überblick über das Wetter von den
-            vergangenen fünf Tagen sehen</p>
-        <p>Hier befinden sich irgendwann mal die aktuellen Senorwerte,
-            aber nur vielleicht</p>
+<div class="container">
+    <img src="images/jtgvorneklein.jpg" alt="<%=t('index.about.image')%>"</img>
+    <h4><%=t('index.about.title')%></h4>
+        <p><%=t('index.about.text')%></p>
+</div>
+<div class="container">
+    <h4><%=t('index.weather.title')%></h4>
+        <p><%=t('index.weather.erklaerung')%></p>
         <img src="images/wetterbeispiel.jpg" alt="Beispiel für eine Wettervorhersage">
-    </div>
+</div>
 
 <%- include ("_footer.ejs"); %>
 

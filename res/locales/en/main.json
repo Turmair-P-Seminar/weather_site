@@ -1,4 +1,29 @@
 {
   "test-title": "Weather station at the JTG Straubing",
+  "header": {
+    "navigation": {
+      "logo-span": "Weather station at the JTG",
+      "logo-alt": "Logo_en"
+    }
+  },
+  "index": {
+    "about": {
+      "image": "The JTG from the front",
+      "title": "About us",
+      "text": "As part of the P-Seminar 'Weather Station at the JTG', we planned a weather station for the school year 2022/23, financed it through sponsorship and set it up together at the end of October. Now you can read the current weather data from the various sensors on this website and get an overview of the weather over the past five days."
+    },
+    "weather": {
+      "title": "Current sensor values",
+      "erklaerung": "At some point, the current senor values will be found here, but only maybe"
+    }
+  },
+  "footer":  {
+    "title": "The P-Seminar of the JTG thanks you for visiting our homepage!",
+    "datenschutz": "privacy policy",
+    "nutzung": "terms of use",
+    "impressum": "imprint",
+    "paul": "Paul was here"
+  },
+
   "path2": "testEN"
 }
