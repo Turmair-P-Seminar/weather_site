@@ -1,9 +1,160 @@
-.navbar {
-    background-color: #333333;
-    font-size: 16px;
-    font-weight: 300;
-}
-figure {
-    text-align: center;
+body {
+    margin: 0;
+    height: fit-content;
 }
 
+.navbar {
+    background-color: #333333;
+    font-size: 26px;
+    font-weight: 300;
+    font-family: OpenSans, sans-serif;
+    color: aliceblue;
+    line-height: 1;
+}
+
+.navbar-inner {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.logocaption {
+    padding-left: 8px;
+    color: aliceblue;
+}
+
+#logoimage {
+    -webkit-filter: invert(95%); /* safari 6.0 - 9.0 */
+    filter: invert(95%);
+}
+
+figure {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin: 0;
+    width: fit-content;
+}
+
+.weatherSmall {
+    margin-left: 10px;
+}
+
+#weatherimage {
+    filter: brightness(190%) drop-shadow(0 0 2px black); /* Default: 190%; Storm 50%*/
+}
+
+.spacer {
+    margin-left: auto;
+}
+
+li{float:left; margin-right: 25px;}
+
+/* For mobile phones: */
+.navbar-right {
+    display: none;
+}
+
+
+
+
+
+/* Styling the menu button */
+.menu-btn {
+    margin-left: 10px;
+    z-index: 3;
+    cursor: pointer;
+    transition: all 0.5s ease-out;
+}
+
+
+/* Styling the hamburger lines */
+.menu-btn .btn-line {
+    width: 28px;
+    height: 3px;
+    margin: 0 0 5px 0;
+    background: aliceblue;
+    transition: all 0.5s ease-out;
+}
+
+/* Adding transform to the X */
+.menu-btn.close {
+    transform: rotate(180deg);
+}
+
+/* Styling the three lines to make it an X */
+.menu-btn.close .btn-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-btn.close .btn-line:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-btn.close .btn-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Styling the position of the menu icon */
+.menu {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    opacity: 0.9;
+    right: 0;
+    display: none;
+}
+
+#rightMenu {
+    background-color: #333333;
+}
+
+.menu.show {
+    visibility: visible;
+    display: block;
+}
+
+/* Adding a transition delay
+  to the 4 items in the
+  navigation menu */
+.nav-item:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.nav-item:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.nav-item:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.nav-item:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+
+
+
+
+
+/* For desktop: */
+@media only screen and (min-width: 768px) {
+    .navbar-right {
+        display: grid;
+        margin: 0;
+    }
+
+    .menu-btn {
+        display: none;
+    }
+}

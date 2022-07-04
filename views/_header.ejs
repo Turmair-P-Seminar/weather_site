@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="<%= lang %>">
 
 <head>
     <meta charset="utf-8"/>
     <link rel="icon" type="image/x-icon" href="images/header/logo32.ico"/>
     <title><%= title %></title>
     <link rel="stylesheet" href="style/header.css"/>
+    <link rel="stylesheet" href="style/w3.css"/>
+    <!--link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"/-->
     <style>
         .image {
             height: auto;
@@ -16,44 +18,86 @@
         .high-quality {
             image-rendering: high-quality;
         }
+
     </style>
 </head>
 
-<section id="navigation">
-    <nav class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="inner" style="float: left">
-            <a class="logo">
-                <figure>
-                    <img src="images/header/logo.png" alt="<%=t('header.navigation.logo-alt')%>"/>
-                    <figcaption>
-                        <h1><%=t('header.navigation.logo-span')%></h1></figcaption>
-                </figure>
-            </a>
-        </div>
-    </nav>
-</section>
-
-
 <div class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header" style="float: left">
-            <!--<img class="image high-quality" src="images/nichtpaulsjtg.jpg" alt="Pauls JTG" width="50" height="10"> -->
-            <img src="images/weather/gewitter.png" alt="Leicht Bewölkt" width="150" height="100">
-            <a>27°C</a>
-            <ul class="nav navbar-nav navbar-right">
-                <a href="/about">Log in</a>
-                <a href="/Log In">About</a>
-                <a href="/Log In">Irgendwas</a>
-            </ul>
+    <div class="navbar-inner">
+        <a class="logo" href="/">
+            <figure>
+                <img src="images/header/logo3.svg" height="36px" alt="<%=t('header.navigation.logo-alt')%>" id="logoimage"/>
+                <figcaption class="logocaption">
+                    <%=t('header.navigation.logo-span')%>
+                </figcaption>
+            </figure>
+        </a>
+
+        <figure class="weatherSmall">
+            <img src="images/weather/svg/cloud.webp" alt="Leicht Bewölkt" height="50px" id="weatherimage">
+            <figcaption class="logocaption">
+                27°C
+            </figcaption>
+        </figure>
+
+        <div class="spacer"></div>
+
+        <div class="menu-btn">
+            <div class="btn-line"></div>
+            <div class="btn-line" style="transition-duration: 0.25s;"></div>
+            <div class="btn-line"></div>
         </div>
+        <div class="menu w3-sidebar w3-bar-block w3-card w3-animate-right" id="rightMenu">
+            <a href="#" class="w3-bar-item w3-button">Link 1</a>
+            <a href="#" class="w3-bar-item w3-button">Link 2</a>
+            <a href="#" class="w3-bar-item w3-button">Link 3</a>
+        </div>
+        <script>
+            // Select dom items
+            const menuBtn =
+                document.querySelector(".menu-btn");
+
+            const menu =
+                document.querySelector(".menu")
 
 
+            // Set the initial state of the menu
+            let showMenu = false;
 
+            menuBtn.addEventListener("click", toggleMenu);
+
+            function toggleMenu() {
+                if (!showMenu) {
+                    menuBtn.classList.add("close");
+                    menu.classList.add("show");
+
+                    // Reset the menu state
+                    showMenu = true;
+                } else {
+                    menuBtn.classList.remove("close");
+                    menu.classList.remove("show")
+
+                    // Reset the menu state
+                    showMenu = false;
+                }
+            }
+        </script>
+        <ul class="navbar-right" >
+            <li href="/about">Log in</li>
+            <li href="/Log In">About</li>
+            <li href="/Log In">Irgendwas</li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="navbar navbar-default navbar-static-top" >
+    <div class="container">
 
         <select name="webmenu" id="webmenu" size="1">
                 <option value="Deutsch">Deutsch</option>
                 <option value="English">English</option>
-            </select>
+        </select>
     </div>
 </div>
 
