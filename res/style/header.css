@@ -13,10 +13,10 @@ body {
 }
 
 .navbar-inner {
-    padding: 10px 20px;
+    padding: 10px 0;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
 }
@@ -24,11 +24,17 @@ body {
 .logo {
     text-decoration: none;
     margin-right: 20px;
+    margin-left: 20px;
 }
 
 .logocaption {
     padding-left: 8px;
     color: aliceblue;
+    display: none;
+}
+
+.alwaysShow {
+    display: block;
 }
 
 #logoimage {
@@ -46,7 +52,7 @@ figure {
 }
 
 .weatherSmall {
-    margin-left: 10px;
+    padding-left: 10px;
 }
 
 #weatherimage {
@@ -57,7 +63,7 @@ figure {
     margin-left: auto;
 }
 
-li{float:left; margin-right: 25px;}
+li{float:left; margin-right: 20px;}
 
 /* For mobile phones: */
 .navbar-right {
@@ -70,7 +76,8 @@ li{float:left; margin-right: 25px;}
 
 /* Styling the menu button */
 .menu-btn {
-    margin-left: 10px;
+    margin-left: 30px;
+    margin-right: 20px;
     z-index: 3;
     cursor: pointer;
     transition: all 0.5s ease-out;
@@ -108,7 +115,6 @@ li{float:left; margin-right: 25px;}
 .menu {
     position: fixed;
     top: 0;
-    width: 100%;
     opacity: 0.9;
     right: 0;
     display: none;
@@ -144,17 +150,32 @@ li{float:left; margin-right: 25px;}
 
 
 
-
+/* For tablets: */
+@media only screen and (min-width: 515px) {
+    figcaption.logocaption {
+        display: block;
+    }
+}
 
 
 /* For desktop: */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 800px) {
     .navbar-right {
-        display: grid;
-        margin: 0;
+        display: inline;
+        list-style-type: none;
+        margin: 0 0 0 30px;
+        padding: 0;
     }
 
     .menu-btn {
+        display: none;
+    }
+
+    .menu {
+        display: none;
+    }
+
+    .menu.show {
         display: none;
     }
 }

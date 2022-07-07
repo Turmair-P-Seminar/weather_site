@@ -9,6 +9,7 @@ import i18n from "i18next";
 import i18nextMiddleware from "i18next-http-middleware";
 import Backend from "i18next-fs-backend";
 import {addRoutes} from './routes.js';
+import {router} from './api_routes.js'
 
 // Configuration below
 const hostname = '127.0.0.1';
@@ -82,7 +83,13 @@ i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).init({
 });
 
 app.use(i18nextMiddleware.handle(i18n, {
-    //ignoreRoutes: ['/res*']
+    ignoreRoutes: [
+        '/images/*',
+        '/fonts/*',
+        '/locales/*',
+        '/style/*',
+        '/api/*'
+    ]
 }));
 
 // Set session
@@ -96,3 +103,6 @@ app.use(function (req, res, next) { // TODO Make this 100% legal
 
 // Add all routes
 addRoutes(i18nextMiddleware, i18n, supportedLanguages, app, hostname, portSave);
+
+// Api routes
+app.use('/api', router);
