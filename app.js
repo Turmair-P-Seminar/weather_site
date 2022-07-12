@@ -101,8 +101,8 @@ app.use(function (req, res, next) { // TODO Make this 100% legal
     next()
 })
 
-// Add all routes
-addRoutes(i18nextMiddleware, i18n, supportedLanguages, app, hostname, portSave);
-
 // Api routes
 app.use('/api', router);
+
+// Add all routes
+addRoutes(i18nextMiddleware, i18n, supportedLanguages, app, hostname, portSave);
