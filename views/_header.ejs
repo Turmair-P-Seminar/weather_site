@@ -74,15 +74,15 @@
     <div class="navbar-inner">
         <a class="logo" href="/">
             <figure>
-                <img src="/images/header/logo3.svg" height="36px" alt="<%=t('header.navigation.logo-alt')%>" id="logoimage"/>
+                <img src="/images/header/logo3.svg" height="36px" alt="<%=t('header.logo-alt')%>" id="logoimage"/>
                 <figcaption class="logocaption">
-                    <%=t('header.navigation.logo-span')%>
+                    <%=t('header.logo-span')%>
                 </figcaption>
             </figure>
         </a>
 
         <figure class="weatherSmall">
-            <img src="/images/weather/svg/cloud.webp" alt="Leicht Bewölkt" height="50px" id="weatherimage">
+            <img src="/images/weather/svg/cloud.webp" alt="<%=t('header.weather.alt_cloudy')%>" height="50px" id="weatherimage">
             <figcaption class="logocaption alwaysShow">
                 27°C
             </figcaption>
@@ -96,9 +96,9 @@
             <div class="btn-line"></div>
         </div>
         <div class="menu w3-sidebar w3-bar-block w3-card w3-animate-right" id="rightMenu">
-            <a href="#" class="w3-bar-item w3-button">Link 1</a>
-            <a href="#" class="w3-bar-item w3-button">Link 2</a>
-            <a href="#" class="w3-bar-item w3-button">Link 3</a>
+            <a href="/login" class="w3-bar-item w3-button"><%=t('header.nav.login')%></a>
+            <a href="/about" class="w3-bar-item w3-button"><%=t('header.nav.about')%></a>
+            <a href="/link3" class="w3-bar-item w3-button"><%=t('header.nav.link3')%></a>
         </div>
         <script>
             // Select dom items
@@ -141,16 +141,16 @@
                             success: function(result) {
                                 result.length
                                 for (let i = 0; i < result.length; i++) {
-                                    document.getElementById('language').insertAdjacentHTML("beforeend",`<option value=${result[i]}>${result[i]}</option>`);
+                                    document.getElementById('language').insertAdjacentHTML("beforeend",`<option value=${result[i]}><%=t('header.languages.${result[i]}')%></option>`);
                                 }
                             } //TODO Finish this
                         });
                     </script>
                 </select>
             </li>
-            <li><a href="/login" class="button-top-right">Log in</a></li>
-            <li><a href="/About" class="button-top-right">About</a></li>
-            <li><a href="/Irgendwas" class="button-top-right">Irgendwas</a></li>
+            <li><a href="/login" class="button-top-right"><%=t('header.nav.login')%></a></li>
+            <li><a href="/about" class="button-top-right"><%=t('header.nav.about')%></a></li>
+            <li><a href="/link3" class="button-top-right"><%=t('header.nav.link3')%></a></li>
         </ul>
     </div>
 </div>

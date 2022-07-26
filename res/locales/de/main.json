@@ -1,9 +1,26 @@
 {
   "test-title": "Aktuelles | Wetterstation am JTG Straubing",
   "header": {
-    "navigation": {
-      "logo-span": "Wetterstation",
-      "logo-alt": "Logo"
+    "logo-span": "Wetterstation",
+    "logo-alt": "Logo",
+    "weather": {
+      "alt_sun": "Sonne",
+      "alt_light-cloudy": "Leicht Bewölkt",
+      "alt_cloudy": "Bewölkt",
+      "alt_light-rain": "Leichter Regen",
+      "alt_rain": "Regen",
+      "alt_strong-rain": "Starker Regen",
+      "alt_snow": "Schnee",
+      "alt_thunder": "Gewitter"
+    },
+    "languages": {
+      "de": "Deutsch",
+      "en": "Englisch"
+    },
+    "nav": {
+      "login": "Anmelden",
+      "about": "Über uns",
+      "link3": "Link 3"
     }
   },
   "index": {
