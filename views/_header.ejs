@@ -8,8 +8,7 @@
 
     <script type="text/javascript" src="/scripts/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="/scripts/select2.min.js"></script>
-    <!--link rel="script" href="/scripts/jquery-3.6.0.min.js"/>
-    <link rel="script" href="/scripts/select2.min.js"/-->
+
     <link rel="stylesheet" href="/style/select2.min.css"/>
     <link rel="stylesheet" href="/style/w3.css"/>
     <link rel="stylesheet" href="/style/header.css"/>
@@ -49,12 +48,22 @@
                 templateSelection: formatState,
                 templateResult: formatState
             });
+
+            $('#language').on('select2:select', function (e) {
+                $.ajax({
+                    url: "/api/lang",
+                    type: "POST",
+                    data: { "lng": $("#language").val() },
+                    dataType:"json",
+                    success: function () {location.reload();} //TODO Finish this
+                });
+            });
         });
 
         function formatState (state) {
             if (!state.id) { return state.text; }
             var $state = $(
-                '<span ><img sytle="display: inline-block;" src="images/' + state.element.value.toLowerCase() + '.png" /> ' + state.text + '</span>'
+                '<span ><img sytle="display: inline-block;" src="/images/' + state.element.value.toLowerCase() + '.png" /> ' + '<p>' + state.text + '</p>' + '</span>'
             );
             return $state;
         }
@@ -124,25 +133,25 @@
         <ul class="navbar-right" >
             <li>
                 <select id="language">
-                    <option value='en'>English</option>
-                    <option value='de'>Deutsch</option>
+                    <script type="text/javascript">
+                        $.ajax({
+                            url: "/api/lang-available",
+                            type: "GET",
+                            dataType:"json",
+                            success: function(result) {
+                                result.length
+                                for (let i = 0; i < result.length; i++) {
+                                    document.getElementById('language').insertAdjacentHTML("beforeend",`<option value=${result[i]}>${result[i]}</option>`);
+                                }
+                            } //TODO Finish this
+                        });
+                    </script>
                 </select>
             </li>
             <li><a href="/login" class="button-top-right">Log in</a></li>
             <li><a href="/About" class="button-top-right">About</a></li>
             <li><a href="/Irgendwas" class="button-top-right">Irgendwas</a></li>
         </ul>
-    </div>
-</div>
-
-
-<div class="navbar navbar-default navbar-static-top" >
-    <div class="container">
-
-        <select name="webmenu" id="webmenu" size="1">
-                <option value="Deutsch">Deutsch</option>
-                <option value="English">English</option>
-        </select>
     </div>
 </div>
 
