@@ -1,0 +1,22 @@
+<%- include ("_header.ejs"); %>
+<form action="login.html" id="change-email">
+    <label class="formtitels">E-mail ändern:</label>
+    <label>Alte E-mail</label>
+    <input class="inputboxes" type="text" maxlength="30">
+
+    <label>Neue E-mail</label>
+    <input class="inputboxes" type="text" maxlength="40">
+
+    <label>Passwort</label>
+    <input class="inputboxes" type="text" maxlength="40">
+
+    <button class="button" type="submit">Bestätigen</button
+</form>
+<br>
+<a href="/login" class="links-under-form">Login</a>
+<a href="/registration" class="links-under-form">Registrieren</a>
+<a href="/changepassword" class="links-under-form">Passwort vergessen?</a>
+<a href="/changeusername" class="links-under-form">Benutzername wechseln</a>
+<br>
+
+<%- include ("_footer.ejs"); %>
