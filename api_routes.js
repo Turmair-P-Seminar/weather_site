@@ -8,14 +8,19 @@ router.use(express.urlencoded({extended: false}));
 router.post('/lang', function (req, res) {
     console.log(req.body.lng);
     req.session.lng = req.body.lng;
-    return res.json({success: true}); //TODO: Only return one
+    return res.status(200).json({success: true}); //TODO: Only return one
     //res.redirect('back');
 });
 
 router.get('/lang-available', function (req, res) {
     let languages = supportedLanguages.filter(item => req.i18n.language !== item);
     languages.unshift(req.i18n.language);
-    return res.json(languages);
+
+    const map1 = new Map();
+    for (const lang of languages) {
+        map1.set(lang, req.i18n.t(`header.languages.${lang}`))
+    }
+    return res.status(200).json(Object.fromEntries(map1));
 })
 
 export { router };

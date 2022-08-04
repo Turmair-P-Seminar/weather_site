@@ -1,22 +1,15 @@
 <%- include ("_header.ejs"); %>
 <div class="container">
-    <img src="/images/jtgvorneklein.jpg" alt="<%=t('index.about.image')%>"</img>
+    <img src="/images/jtgvorneklein.jpg" alt="<%=t('index.about.image')%>" style="width: 100%"/>
+    <!-- TODO Make this relative scaling better       -->
     <h4><%=t('index.about.title')%></h4>
         <p><%=t('index.about.text')%></p>
 </div>
 <div class="container">
     <h4><%=t('index.weather.title')%></h4>
         <p><%=t('index.weather.erklaerung')%></p>
-        <img src="/images/wetterbeispiel.jpg" alt="Beispiel für eine Wettervorhersage">
+        <img src="/images/wetterbeispiel.jpg" alt="Beispiel für eine Wettervorhersage" style="width: 100%">
+        <!-- TODO Make this relative scaling better       -->
 </div>
 
 <%- include ("_footer.ejs"); %>
-
-<!-- header(Zeile oben)/footer(Impressum...; Nervig und Rechtliches...) beinhaltet was auf jeder Unterseite sichbar ist. -->
-<audio autoplay="autoplay"> </audio>
-<br>
-<audio/> [Short-Tag; öffnet sich selbst und schließt sich selbst; alle Tags müssen geschlossen werden]
-Container oben
-was drinnen  -> Tab
-alles wieder mit Tab um Ebene zu sehen
-Flagge mit Drop-Down-Menü
