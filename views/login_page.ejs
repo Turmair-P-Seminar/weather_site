@@ -1,21 +1,28 @@
 <%- include ("_header.ejs"); %>
 <div class="login-form">
-    <form action="login.html" id="login" method="post">
-        <label class="formtitels">Login:</label>
-        <label>E-mail/Nutzername</label>
-        <input class="inputboxes" type="text" maxlength="30">
+    <form action="/api/login" id="login" method="post">
+        <div class="formlogo">
+            <div class="pull-right">
+                <img src="/images/header/logo3.svg" alt="" height="48px"/>
+            </div>
+            <h1 class="formtitel">Wetterstation</h1>
+            <h2 class="formtitel small">Johannes-Turmair-Gymnasium</h2>
+        </div>
+        <hr/>
 
-        <label>Passwort</label>
-        <input class="inputboxes" type="text" maxlength="40">
+        <label class="input-labels" for="email">E-Mail</label>
+        <input class="input-boxes" type="email" maxlength="30" id="email" placeholder="E-Mail-Adresse" required autofocus/>
 
-        <button class="button" type="submit">Login</button>
+        <label class="input-labels" for="password">Passwort</label>
+        <input class="input-boxes" type="password" maxlength="40" id="password" placeholder="Passwort" required autofocus/>
 
-        <br>
-        <a href="/registration" class="links-under-form">Registrieren</a>
-        <a href="/changepassword" class="links-under-form">Passwort vergessen?</a>
-        <a href="/changeemail" class="links-under-form">E-Mail wechseln</a>
-        <a href="/changeusername" class="links-under-form">Benutzername wechseln</a>
-        <br>
+        <button class="button" type="submit">Anmelden</button>
+        <hr/>
+
+        <div id="links" class="" style="margin-top: 10px; text-align: center;">
+            <a href="/register">Registrieren</a>
+            <a href="/change-password">Passwort vergessen</a>
+        </div>
     </form>
 </div>
 
