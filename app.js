@@ -10,6 +10,8 @@ import i18nextMiddleware from "i18next-http-middleware";
 import Backend from "i18next-fs-backend";
 import {addRoutes} from './routes.js';
 import {router} from './api_routes.js'
+import helmet from "helmet";
+import crypto from "crypto";
 
 // Configuration below
 const hostname = '127.0.0.1';
@@ -40,6 +42,20 @@ const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(portSave, function () {
     console.log(`Server running at https://${hostname}:${portSave}/`);
 });
+
+// The non-silver bullet
+app.use((req, res, next) => {
+    res.locals.cspNonce = crypto.randomBytes(16).toString("hex");
+    next();
+});
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            scriptSrc: ["'self'", (req, res) => `'nonce-${res.locals.cspNonce}'`]
+        }
+    }
+}));
+
 
 app.use(express.static("res"));
 

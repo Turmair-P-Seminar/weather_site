@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/style/w3.css"/>
     <link rel="stylesheet" href="/style/header.css"/>
     <link rel="stylesheet" href="/style/footer.css"/>
+    <link rel="stylesheet" href="/style/sites/<%= site %>.css">
 
     <meta charset="utf-8"/>
     <meta name="description" content="Aktuelles Wetter in Straubing, bereitgestellt durch die Wetterstation des Johannes-Turmair-Gymnasiums Straubing"> <!-- TODO: Replace with a dynamic filled value -->
@@ -22,7 +23,7 @@
     <meta name="googlebot-image" content="noindex" />
     <meta name="MSNBot-Media" content="noindex" />
 
-    <script>
+    <script type="text/javascript" nonce="<%= nonce %>">
         $(document).ready(function(){
             $("#language").select2({
                 templateSelection: formatState,
@@ -80,7 +81,7 @@
             <a href="/about" class="w3-bar-item w3-button"><%=t('header.nav.about')%></a>
             <a href="/link3" class="w3-bar-item w3-button"><%=t('header.nav.link3')%></a>
         </div>
-        <script>
+        <script type="text/javascript" nonce="<%= nonce %>">
             // Select dom items
             const menuBtn =
                 document.querySelector(".menu-btn");
@@ -113,7 +114,7 @@
         <ul class="navbar-right" >
             <li>
                 <select id="language">
-                    <script type="text/javascript">
+                    <script type="text/javascript" nonce="<%= nonce %>">
                         $.ajax({
                             url: "/api/lang-available",
                             type: "GET",
@@ -128,7 +129,7 @@
                     </script>
                 </select>
             </li>
-            <li><a href="/login" class="button-top-right"><%=t('header.nav.login')%></a></li>
+            <li><a href="/login" class="button-top-right" id="login-li"><%=t('header.nav.login')%></a></li>
             <li><a href="/about" class="button-top-right"><%=t('header.nav.about')%></a></li>
             <li><a href="/link3" class="button-top-right"><%=t('header.nav.link3')%></a></li>
         </ul>
