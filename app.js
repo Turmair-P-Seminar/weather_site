@@ -83,7 +83,12 @@ app.use(session({
 }));
 
 // i18next setup
-i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).init({
+i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).use({
+    type: 'postProcessor',
+    name: 'link',
+    process: function(value, key, options, translator) {
+        return value.toLowerCase();
+    }}).init({
     debug: true,
     detection: {
         ignoreCase: true,

@@ -77,7 +77,7 @@
             <div class="btn-line"></div>
         </div>
         <div class="menu w3-sidebar w3-bar-block w3-card w3-animate-right" id="rightMenu">
-            <a href="/login" class="w3-bar-item w3-button"><%=t('header.nav.login')%></a>
+            <a href="/<%=t('login', {postProcess: 'link'})%>" class="w3-bar-item w3-button"><%=t('login')%></a>
             <a href="/about" class="w3-bar-item w3-button"><%=t('header.nav.about')%></a>
             <a href="/link3" class="w3-bar-item w3-button"><%=t('header.nav.link3')%></a>
         </div>
@@ -129,7 +129,7 @@
                     </script>
                 </select>
             </li>
-            <li><a href="/login" class="button-top-right" id="login-li"><%=t('header.nav.login')%></a></li>
+            <li><a href="/<%=t('login', {postProcess: 'link'})%>" class="button-top-right" id="login-li"><%=t('login')%></a></li>
             <li><a href="/about" class="button-top-right"><%=t('header.nav.about')%></a></li>
             <li><a href="/link3" class="button-top-right"><%=t('header.nav.link3')%></a></li>
         </ul>

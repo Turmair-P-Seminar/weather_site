@@ -1,5 +1,6 @@
 {
-  "test-title": "News | Weather Station at JTG Straubing",
+  "title-common": " | Weather Station at JTG Straubing",
+  "test-title": "News",
   "header": {
     "logo-span": "Weather station",
     "logo-alt": "Logo",
@@ -18,7 +19,6 @@
       "en": "English"
     },
     "nav": {
-      "login": "Login",
       "about": "About",
       "link3": "Link 3"
     }
@@ -41,5 +41,5 @@
     "impressum": "imprint",
     "paul": "Paul was here"
   },
-  "path2": "testEN"
+  "login": "Login"
 }

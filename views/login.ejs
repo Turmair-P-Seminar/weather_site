@@ -1,11 +1,11 @@
-<%- include ("_header.ejs"); %>
+<%- include ("_header.ejs"); %> <!-- TODO Dynamic this-->
 <div class="login-form">
     <form action="/api/login" id="login" method="post">
         <div class="formlogo">
             <div class="pull-right">
-                <img src="/images/header/logo3.svg" alt="" height="48px"/>
+                <img src="/images/header/logo3.svg" alt="<%= t("header.logo-alt") %>" height="48px"/>
             </div>
-            <h1 class="formtitel">Wetterstation</h1>
+            <h1 class="formtitel"><%= t("header.logo-span") %></h1>
             <h2 class="formtitel small">Johannes-Turmair-Gymnasium</h2>
         </div>
         <hr/>
@@ -16,7 +16,7 @@
         <label class="input-labels" for="password">Passwort</label>
         <input class="input-boxes" type="password" maxlength="40" id="password" placeholder="Passwort" required autofocus/>
 
-        <button class="button" type="submit">Anmelden</button>
+        <button class="button" type="submit"><%= t("login") %></button>
         <hr/>
 
         <div id="links" class="" style="margin-top: 10px; text-align: center;">
