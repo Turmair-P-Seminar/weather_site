@@ -16,7 +16,7 @@ const addRoutes = function(i18nextMiddleware, i18n, supportedLanguages, app, hos
 
     i18nextMiddleware.addRoute(i18n, '/login', supportedLanguages, app, 'get', function(req, res) { //route.products/route.harddrives/route.overview
         console.log(req.i18n.languages);
-        res.render("login_page", {title: req.i18n.t("test-title"), lang: req.i18n.language, site: "login", nonce: res.locals.cspNonce});
+        res.render("login", {title: req.i18n.t("test-title"), lang: req.i18n.language, site: "login", nonce: res.locals.cspNonce});
     });
 
     i18nextMiddleware.addRoute(i18n, '/registration', supportedLanguages, app, 'get', function(req, res) { //route.products/route.harddrives/route.overview

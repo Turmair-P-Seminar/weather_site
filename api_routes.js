@@ -8,8 +8,7 @@ router.use(express.urlencoded({extended: false}));
 router.post('/lang', function (req, res) {
     console.log(req.body.lng);
     req.session.lng = req.body.lng;
-    return res.status(200).json({success: true}); //TODO: Only return one
-    //res.redirect('back');
+    return res.status(200).json({success: true});
 });
 
 router.get('/lang-available', function (req, res) {
