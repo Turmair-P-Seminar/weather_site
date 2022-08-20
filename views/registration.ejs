@@ -1,0 +1,25 @@
+<%- include ("_header.ejs"); %>
+<form action="login.html" id="registration">
+    <label class="formtitels">Registrierung</label>
+    <label>E-mail</label>
+    <input class="inputboxes" type="text" maxlength="30">
+
+    <label>Nutzernam</label>
+    <input class="inputboxes" type="text" maxlength="40">
+
+    <label>Passwort</label>
+    <input class="inputboxes" type="text" maxlength="40">
+
+    <label>Passwort bestätigen</label>
+    <input class="inputboxes" type="text" maxlength="40">
+
+    <button class="button" type="submit">Registrieren</button>
+</form>
+<br>
+<a href="/registration" class="links-under-form">Registrieren</a>
+<a href="/changepassword" class="links-under-form">Passwort vergessen?</a>
+<a href="/changeemail" class="links-under-form">E-Mail wechseln</a>
+<a href="/changeusername" class="links-under-form">Benutzername wechseln</a>
+<br>
+
+<%- include ("_footer.ejs"); %>

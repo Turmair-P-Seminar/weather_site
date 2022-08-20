@@ -10,6 +10,8 @@ import i18nextMiddleware from "i18next-http-middleware";
 import Backend from "i18next-fs-backend";
 import {addRoutes} from './routes.js';
 import {router} from './api_routes.js'
+import helmet from "helmet";
+import crypto from "crypto";
 
 // Configuration below
 const hostname = '127.0.0.1';
@@ -17,11 +19,12 @@ const port = 80; // Should be 3000 on linux (iptable routing). The Header upgrad
 const portSave = 443; // Should be 8433 on linux (iptable routing). The Header upgrade below does not seem to be working with ports >999.
 const supportedLanguages = ['en', 'de']; // First is fallback language.
 
-export {supportedLanguages};
 
 const privateKey = fs.readFileSync('https/wetter-turmair-de.key', 'utf8');
 const certificate = fs.readFileSync('https/wetter-turmair-de.crt', 'utf8');
 // Configuration above
+
+export {supportedLanguages};
 
 // Credential store for https
 const credentials = {key: privateKey, cert: certificate};
@@ -39,6 +42,20 @@ const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(portSave, function () {
     console.log(`Server running at https://${hostname}:${portSave}/`);
 });
+
+// The non-silver bullet
+app.use((req, res, next) => {
+    res.locals.cspNonce = crypto.randomBytes(16).toString("hex");
+    next();
+});
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            scriptSrc: ["'self'", (req, res) => `'nonce-${res.locals.cspNonce}'`]
+        }
+    }
+}));
+
 
 app.use(express.static("res"));
 
@@ -66,7 +83,12 @@ app.use(session({
 }));
 
 // i18next setup
-i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).init({
+i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).use({
+    type: 'postProcessor',
+    name: 'link',
+    process: function(value, key, options, translator) {
+        return value.toLowerCase();
+    }}).init({
     debug: true,
     detection: {
         ignoreCase: true,

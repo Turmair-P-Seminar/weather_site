@@ -1,5 +1,6 @@
 {
-  "test-title": "Aktuelles | Wetterstation am JTG Straubing",
+  "title-common": " | Wetterstation am JTG Straubing",
+  "test-title": "Aktuelles",
   "header": {
     "logo-span": "Wetterstation",
     "logo-alt": "Logo",
@@ -18,7 +19,6 @@
       "en": "Englisch"
     },
     "nav": {
-      "login": "Anmelden",
       "about": "Über uns",
       "link3": "Link 3"
     }
@@ -41,5 +41,5 @@
     "impressum": "Impressum",
     "paul": "Paul war hier"
   },
-  "path2": "testDE"
+  "login": "Anmelden"
 }
