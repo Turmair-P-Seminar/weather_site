@@ -10,13 +10,17 @@
         </div>
         <hr/>
 
+        <input type="hidden" name="_csrf" value="<%= _csrfToken %>"/>
+        <input type="hidden" name="from" value="<%= from %>">
+
+        <p style="margin: 0; color: red"><%= failed %></p>
         <label class="input-labels" for="email">E-Mail</label>
-        <input class="input-boxes" type="email" maxlength="30" id="email" placeholder="E-Mail-Adresse" required autofocus/>
+        <input class="input-boxes" type="email" maxlength="30" id="email" name="email" placeholder="E-Mail-Adresse" required autofocus/>
 
         <label class="input-labels" for="password">Passwort</label>
-        <input class="input-boxes" type="password" maxlength="40" id="password" placeholder="Passwort" required autofocus/>
+        <input class="input-boxes" type="password" maxlength="40" id="password" name="password" placeholder="Passwort" required autofocus/>
 
-        <button class="button" type="submit"><%= t("login") %></button>
+        <button class="button" type="submit" id="submit"><%= t("login") %></button>
         <hr/>
 
         <div id="links" class="" style="margin-top: 10px; text-align: center;">

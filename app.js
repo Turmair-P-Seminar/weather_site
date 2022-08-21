@@ -12,6 +12,8 @@ import {addRoutes} from './routes.js';
 import {router} from './api_routes.js'
 import helmet from "helmet";
 import crypto from "crypto";
+import csrf from "csurf";
+import bodyParser from "body-parser";
 
 // Configuration below
 const hostname = '127.0.0.1';
@@ -106,6 +108,11 @@ i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).use({
     }
 });
 
+// csurf
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(csrf({}))
+
+// Apply i18n
 app.use(i18nextMiddleware.handle(i18n, {
     ignoreRoutes: [
         '/images/*',
@@ -128,5 +135,5 @@ app.use(function (req, res, next) { // TODO Make this 100% legal
 // Api routes
 app.use('/api', router);
 
-// Add all routes
+// Add all other routes
 addRoutes(i18nextMiddleware, i18n, supportedLanguages, app, hostname, portSave);

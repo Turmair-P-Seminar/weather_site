@@ -34,7 +34,12 @@
                 $.ajax({
                     url: "/api/lang",
                     type: "POST",
-                    data: { "lng": $("#language").val() },
+                    headers: {
+                        'CSRF-Token': "<%= _csrfToken %>" // send the csrf token as a header
+                    },
+                    data: {
+                        "lng": $("#language").val()
+                    },
                     dataType:"json",
                     success: function () {location.reload();} //TODO Finish this
                 });
