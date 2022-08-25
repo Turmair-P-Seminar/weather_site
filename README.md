@@ -1,0 +1,1 @@
+This project uses a [fork](https://github.com/Nick1st/mkcert) of [mkcert](https://github.com/FiloSottile/mkcert), licensed under the [BSD-3-Clause license](https://github.com/FiloSottile/mkcert/blob/master/LICENSE).
