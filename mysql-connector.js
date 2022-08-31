@@ -3,7 +3,7 @@ import knex from 'knex';
 const Knex = knex({
     client: 'mysql2',
     connection: {
-        host : 'mcnoip.ddns.net',
+        host : 'nick1st.dns.navy',
         port : 3306,
         user : 'knex',
         password : 'äÔë9²à¤yéøÌBçÑAsOã=¢',
