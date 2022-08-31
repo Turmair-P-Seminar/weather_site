@@ -5,15 +5,18 @@ import https from 'https';
 import express from 'express';
 import session from 'express-session';
 import createMemoryStore from 'memorystore';
+import KnexSessionStoreI from 'connect-session-knex';
+const KnexSessionStore = KnexSessionStoreI(session);
 import i18n from "i18next";
 import i18nextMiddleware from "i18next-http-middleware";
 import Backend from "i18next-fs-backend";
 import {addRoutes} from './routes.js';
 import {router} from './api_routes.js'
 import helmet from "helmet";
-import crypto from "crypto";
 import csrf from "csurf";
 import bodyParser from "body-parser";
+import {addNonce} from "./src/middlewares/customMiddlewares.js";
+import {Knex} from "./mysql-connector.js";
 
 // Configuration below
 const hostname = '127.0.0.1';
@@ -39,40 +42,37 @@ http.createServer(function (req, res) {
 
 // Creates the https server component
 const app = express();
-const httpsServer = https.createServer(credentials, app);
-
-httpsServer.listen(portSave, function () {
+https.createServer(credentials, app).listen(portSave, function () {
     console.log(`Server running at https://${hostname}:${portSave}/`);
 });
-
-// The non-silver bullet
-app.use((req, res, next) => {
-    res.locals.cspNonce = crypto.randomBytes(16).toString("hex");
-    next();
-});
-app.use(helmet({
-    contentSecurityPolicy: {
-        directives: {
-            scriptSrc: ["'self'", (req, res) => `'nonce-${res.locals.cspNonce}'`]
-        }
-    }
-}));
-
-
-app.use(express.static("res"));
-
-// Create a MemoryStore
-const MemoryStore = createMemoryStore(session);
-
 // App config
 app.set("views", "views");
 app.set("view engine", "ejs");
 app.set("port", portSave)
-// Cookie config
+
+// The non-silver bullet
+app.use(addNonce);
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            scriptSrc: ["'self'", (req, res) => `'nonce-${res.options.nonce}'`]
+        }
+    }
+}));
+
+// Static router. These files are send with a cache=true header and accessible for everyone.
+app.use(express.static("res"));
+
+// Create a session handler
+const MemoryStore = createMemoryStore(session);
+const KnexStore = new KnexSessionStore({
+    knex: Knex
+});
 app.use(session({
-    store: new MemoryStore(session, {
-        checkPeriod: 3600000 // prune expired entries every hour
-    }),
+    // store: new MemoryStore(session, {
+    //     checkPeriod: 3600000 // prune expired entries every hour
+    // }),
+    store: KnexStore,
     cookie: {
         httpOnly: true,
         maxAge: 3600000, // 1 hour
@@ -90,7 +90,8 @@ i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).use({
     name: 'link',
     process: function(value, key, options, translator) {
         return value.toLowerCase();
-    }}).init({
+    }
+}).init({
     debug: true,
     detection: {
         ignoreCase: true,
@@ -136,4 +137,4 @@ app.use(function (req, res, next) { // TODO Make this 100% legal
 app.use('/api', router);
 
 // Add all other routes
-addRoutes(i18nextMiddleware, i18n, supportedLanguages, app, hostname, portSave);
+addRoutes(i18nextMiddleware, i18n, supportedLanguages, app);

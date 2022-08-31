@@ -30,4 +30,4 @@ const getPwd = async function(email) {
     });
 }
 
-export {changePwd, getPwd};
+export {changePwd, getPwd, Knex};
