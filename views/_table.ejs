@@ -1,0 +1,154 @@
+<!--<script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.2/dist/chart.min.js"></script>-->
+<script type="text/javascript" nonce="<%= nonce %>" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- TO DO: KEINE ABSOLUTEN ANGABEN ZUR SEITENPOSITION MACHEN  60px=10°; 55px=5mm/m²-->
+
+<style>
+    #ThermometerFüllung {
+        position: absolute;
+        bottom: 28px;
+        background-color: chocolate;
+        width: 100px;
+        height: 250px;
+        z-index: -1;
+    }
+
+    #aktuelleSensordaten {
+        width: 800px;
+        height: 500px;
+        border: 2px solid blue;
+        position: relative;
+    }
+
+    #Thermometer {
+        position: absolute;
+        bottom: 0;
+        height: 440px;
+        width: 122px;
+    }
+
+    #Regenmesser {
+        position: absolute;
+        bottom: 0px;
+        height: 435px;
+        width: 187px;
+        left: 250px;
+    }
+
+    #RegenmesserFüllung {
+        position: absolute;
+        bottom: 32px;
+        background-color: deepskyblue;
+        left: 250px;
+        width: 180px;
+        height: 55px;
+        z-index: -1;
+    }
+</style>
+
+
+<div id="aktuelleSensordaten">
+
+    <img src="/images/weather/thermometer.png" id="Thermometer" alt="Thermometer!!!"/>
+    <div id="ThermometerFüllung"></div>
+
+    <img src="/images/weather/regenmesser.png" id="Regenmesser" alt="Fu** REGENMESSER!"/>
+    <div id="RegenmesserFüllung"></div>
+
+
+</div>
+
+
+
+
+
+
+<div>
+    <canvas id="myChart", height="100"></canvas>
+</div>
+
+
+
+
+<script type="text/javascript" nonce="<%= nonce %>">
+
+
+    var canvas = document.getElementById('myChart');
+    new Chart(canvas, {
+        type: 'line',
+        data: {
+            labels: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
+            datasets: [{
+                label: 'Temperatur',
+                yAxisID: 'left-y-axis',
+                data: [35, 26, 25, 30, 5, 7, -5],
+                fill: true,
+                tension: 0.25,
+                backgroundColor: 'rgba(255,255,0,0.25)',
+                borderColor: 'rgba(255,0,0,1)'
+            }, {
+                label: 'Niederschlag',
+                yAxisID: 'right-y-axis',
+                data: [1, 1, 100, 30, 0, 30, 5],
+                fill: {
+                    target: 'origin',
+                    below: 'rgba(0,0,0,0)',
+                    above: 'rgba(0,0,255,0.25)'
+                },
+                tension: 0.1,
+                backgroundColor: 'rgba(0,0,255,0.25)',
+                borderColor: 'rgb(0,0,255)'
+            }]
+        },
+        options: {
+
+            scales: {
+                'left-y-axis': {
+                    type: 'linear',
+                    position: 'left',
+                    ticks: {
+                        callback: function(value, index, values) {
+                            if (value > 40) {
+                                return null;
+                            }
+                            else {
+                                return value;
+                            }
+                        }
+
+                    },
+                    max: 80,
+                    min: -10,
+                    stepSize: 10,
+
+
+
+                },
+                'right-y-axis': {
+                    type: 'linear',
+                    position: 'right',
+                    ticks: {
+                        callback: function(value, index, values) {
+                            if (value < 0) {
+                                return null;
+                            }
+                            else {
+                                return value;
+                            }
+
+                        }},
+                    max: 160,
+                    min: -20,
+                    stepSize: 20,
+
+                }
+            }
+        }
+
+
+    });
+
+
+
+</script>
+
