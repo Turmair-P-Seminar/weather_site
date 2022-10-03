@@ -2,6 +2,7 @@ import express from "express";
 import {supportedLanguages} from "./app.js";
 import {getPwd} from "./mysql-connector.js";
 import bcrypt from 'bcryptjs';
+import {requestLogin} from "./routes.js";
 
 const router = express.Router();
 
@@ -48,6 +49,14 @@ router.post('/login', function (req, res) {
         });
 
     });
+});
+
+router.get('/logout', function (req, res) {
+    if (req.session.isLoggedIn !== true) {
+        requestLogin(res, req);
+    }
+    req.session.destroy();
+    return res.redirect(303, "/");
 });
 
 export { router };

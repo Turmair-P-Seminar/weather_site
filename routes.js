@@ -34,7 +34,8 @@ function addDefaultConfig(req, res, obj) {
         ...obj,
         ...res.options,
         lang: req.i18n.language,
-        _csrfToken: req.csrfToken()
+        _csrfToken: req.csrfToken(),
+        isLoggedIn: req.session.isLoggedIn
     };
 }
 
