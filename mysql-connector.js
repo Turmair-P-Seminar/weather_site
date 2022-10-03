@@ -26,7 +26,7 @@ const getPwd = async function(email) {
     return Knex.transaction(trx => {
         return Knex.select('password').from('user').where('email', email).then();
     }).then(res => {
-        return res[0].password
+        return res[0] != null ? res[0].password : null;
     });
 }
 

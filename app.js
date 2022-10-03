@@ -66,13 +66,15 @@ app.use(express.static("res"));
 // Create a session handler
 const MemoryStore = createMemoryStore(session);
 const KnexStore = new KnexSessionStore({
-    knex: Knex
+    knex: Knex,
+    disableDbCleanup: true,
+    createtable: false
 });
 app.use(session({
-    // store: new MemoryStore(session, {
-    //     checkPeriod: 3600000 // prune expired entries every hour
-    // }),
-    store: KnexStore,
+    store: new MemoryStore(session, {
+        checkPeriod: 3600000 // prune expired entries every hour
+    }),
+    //store: KnexStore,
     cookie: {
         httpOnly: true,
         maxAge: 3600000, // 1 hour
