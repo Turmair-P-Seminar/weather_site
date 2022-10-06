@@ -41,5 +41,6 @@
     "impressum": "imprint",
     "paul": "Paul was here"
   },
-  "login": "Login"
+  "login": "Login",
+  "logout": "Logout"
 }
