@@ -20,7 +20,7 @@
     "connect-session-knex": "file:src/node_modules/knex-mysql-session",
     "csurf": "^1.11.0",
     "ejs": "^3.1.8",
-    "express": "^4.18.1",
+    "express": "^4.18.2",
     "express-session": "^1.17.3",
     "helmet": "^6.0.0",
     "i18n": "^0.15.1",
