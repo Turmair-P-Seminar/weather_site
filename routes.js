@@ -19,6 +19,11 @@ const addRoutes = function(i18nextMiddleware, i18n, supportedLanguages, app, hos
         res.render("forgot", {title: getTitle(req, "forgot"), lang: req.i18n.language, site: "forgot", nonce: res.locals.cspNonce});
     });
 
+    i18nextMiddleware.addRoute(i18n, '/about', supportedLanguages, app, 'get', function(req, res) {
+        console.log(req.i18n.languages);
+        res.render("about", {title: getTitle(req, "about"), lang: req.i18n.language, site: "about", nonce: res.locals.cspNonce});
+    });
+
     i18nextMiddleware.addRoute(i18n, '/', supportedLanguages, app, 'get', function(req, res) {
         console.log(req.i18n.language);
         // if (req.i18n.language === 'en') {
