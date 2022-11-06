@@ -16,7 +16,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
-    "body-parser": "^1.20.0",
+    "body-parser": "^1.20.1",
     "connect-session-knex": "file:src/node_modules/knex-mysql-session",
     "csurf": "^1.11.0",
     "ejs": "^3.1.8",
