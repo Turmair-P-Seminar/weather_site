@@ -1,0 +1,230 @@
+<!--<script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.2/dist/chart.min.js"></script>-->
+<script type="text/javascript" nonce="<%= nonce %>" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- TO DO: KEINE ABSOLUTEN ANGABEN ZUR SEITENPOSITION MACHEN  60px=10°; 55px=5mm/m²-->
+
+
+
+
+
+<style>
+    #Temperatur {
+        position: absolute;
+        max-width: 18%;
+        width: auto;
+        height: auto;
+        max-height: 400px;
+    }
+
+    #Niederschlag {
+        position: absolute;
+        max-width: 27%;
+        width: auto;
+        height: auto;
+        left: 25%;
+        max-height: 400px;
+    }
+
+    #Luftfeuchte {
+        position: absolute;
+        width: 45%;
+        height: 100%;
+        left: 55%;
+        max-width: 250px;
+
+    }
+
+    #ThermometerFüllung {
+        position: absolute;
+        bottom: 6%;
+        background-color: chocolate;
+        width: 95%;
+        height: calc((20% + 28%) * (14/10) + 1%);
+        left: 1%;
+        z-index: -1;
+    }
+
+
+    #aktuelleSensordaten {
+        width: 100%;
+        height: 410px;
+        border: 2px solid blue;
+        position: relative;
+    }
+
+    #Thermometer {
+        position: relative;
+        bottom: 0;
+        height: auto;
+        width: auto;
+        max-height: 400px;
+        max-width: 100%;
+
+    }
+
+    #Regenmesser {
+        position: relative;
+        height: auto;
+        width: auto;
+        max-height: 400px;
+        max-width: 100%;
+    }
+
+    #RegenmesserFüllung {
+        position: absolute;
+        bottom: 7%;
+        background-color: deepskyblue;
+        left: 5%;
+        width: 90%;
+        height: calc(7% * (51/20));
+        z-index: -1;
+    }
+
+    #Hygrometer {
+        position: absolute;
+
+
+        height: auto;
+        width: 100%;
+    }
+
+    #HygrometerZeiger {
+        position: absolute;
+        height: auto;
+        width: 100%;
+        rotate: calc(3deg*75);
+    }
+
+    #Diagramme {
+        position: relative;
+        border: 2px chocolate;
+        width: 100%;
+        height: 80%;
+    }
+
+   </style>
+
+
+
+<div id="aktuelleSensordaten">
+
+    <div id="Temperatur">
+        <img src="/images/weather/thermometer.png" id="Thermometer" alt="<%=t('messinstrument.thermometer')%>"/>
+        <div id="ThermometerFüllung"></div>
+    </div>
+
+    <div id="Niederschlag">
+        <img src="/images/weather/regenmesser.png" id="Regenmesser" alt="<%=t('messinstrument.regenmesser')%>"/>
+        <div id="RegenmesserFüllung"></div>
+    </div>
+
+    <div id="Luftfeuchte">
+        <img src="/images/weather/hygrometer.png" id="Hygrometer" alt="<%=t('messinstrument.hygrometer')%>"/>
+        <img src="/images/weather/hygrometerZeiger.png" id="HygrometerZeiger" alt="<%=t('messinstrument.hygrometerzeiger')%>"/>
+    </div>
+
+</div>
+
+
+
+<script type="text/javascript" nonce="<%= nonce %>">
+    const screenWidth = screen.width;
+    if (screen.width < 500) {
+        const p = 300;
+    }
+    else {
+        const p = 100; }
+</script>
+
+
+
+<div id="Diagramme">
+
+    <canvas id="myChart", height="100%"></canvas>
+
+</div>
+
+
+
+<script type="text/javascript" nonce="<%= nonce %>">
+
+
+    var canvas = document.getElementById('myChart');
+    new Chart(canvas, {
+        type: 'line',
+        data: {
+            labels: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
+            datasets: [{
+                label: 'Temperatur',
+                yAxisID: 'left-y-axis',
+                data: [35, 26, 25, 30, 5, 7, -5],
+                fill: true,
+                tension: 0.25,
+                backgroundColor: 'rgba(255,255,0,0.25)',
+                borderColor: 'rgba(255,0,0,1)'
+            }, {
+                label: 'Niederschlag',
+                yAxisID: 'right-y-axis',
+                data: [1, 1, 100, 30, 0, 30, 5],
+                fill: {
+                    target: 'origin',
+                    below: 'rgba(0,0,0,0)',
+                    above: 'rgba(0,0,255,0.25)'
+                },
+                tension: 0.1,
+                backgroundColor: 'rgba(0,0,255,0.25)',
+                borderColor: 'rgb(0,0,255)'
+            }]
+        },
+        options: {
+
+            scales: {
+                'left-y-axis': {
+                    type: 'linear',
+                    position: 'left',
+                    ticks: {
+                        callback: function(value, index, values) {
+                            if (value > 40) {
+                                return null;
+                            }
+                            else {
+                                return value;
+                            }
+                        }
+
+                    },
+                    max: 80,
+                    min: -10,
+                    stepSize: 10,
+
+
+
+                },
+                'right-y-axis': {
+                    type: 'linear',
+                    position: 'right',
+                    ticks: {
+                        callback: function(value, index, values) {
+                            if (value < 0) {
+                                return null;
+                            }
+                            else {
+                                return value;
+                            }
+
+                        }},
+                    max: 160,
+                    min: -20,
+                    stepSize: 20,
+
+                }
+            }
+        }
+
+
+    });
+
+
+
+</script>
+

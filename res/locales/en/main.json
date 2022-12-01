@@ -34,6 +34,13 @@
       "erklaerung": "At some point, the current senor values will be found here, but only maybe"
     }
   },
+  "messinstrument":
+  {
+    "thermometer": "Thermometer",
+    "regenmesser": "Rain gauge",
+    "hygrometer": "Hygrometer",
+    "hygrometerzeiger": "Hygrometer Pointer"
+  },
   "footer":  {
     "title": "The P-Seminar of the JTG thanks you for visiting our homepage!",
     "datenschutz": "privacy policy",
