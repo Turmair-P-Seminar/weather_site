@@ -34,6 +34,13 @@
       "erklaerung": "Hier befinden sich irgendwann mal die aktuellen Sensorwerte, aber nur vielleicht"
     }
   },
+  "messinstrument":
+  {
+    "thermometer": "Thermometer",
+    "regenmesser": "Regenmesser",
+    "hygrometer": "Hygrometer",
+    "hygrometerzeiger": "Zeiger des Hygrometers"
+  },
   "footer":  {
     "title": "Das P-Seminar des JTG bedankt sich für Ihren Besuch auf unserer Homepage!",
     "datenschutz": "Datenschutzerklärung",
