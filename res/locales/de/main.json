@@ -48,5 +48,6 @@
     "impressum": "Impressum",
     "paul": "Paul war hier"
   },
-  "login": "Anmelden"
+  "login": "Anmelden",
+  "logout": "Abmelden"
 }

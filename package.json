@@ -15,14 +15,21 @@
   "license": "ARR",
   "dependencies": {
     "chart.js": "^3.9.1",
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.20.1",
+    "connect-session-knex": "file:src/node_modules/knex-mysql-session",
+    "csurf": "^1.11.0",
     "ejs": "^3.1.8",
-    "express": "^4.18.1",
+    "express": "^4.18.2",
     "express-session": "^1.17.3",
-    "helmet": "^5.1.1",
-    "i18n": "^0.15.0",
-    "i18next": "^21.9.1",
-    "i18next-fs-backend": "^1.1.5",
+    "helmet": "^6.0.0",
+    "i18n": "^0.15.1",
+    "i18next": "^22.0.6",
+    "i18next-fs-backend": "^2.0.0",
     "i18next-http-middleware": "^3.2.1",
-    "memorystore": "^1.6.7"
+    "knex": "^2.3.0",
+    "memorystore": "^1.6.7",
+    "mysql2": "^2.3.3"
   }
 }
