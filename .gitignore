@@ -2,3 +2,7 @@
 /node_modules/
 /src/node_modules/knex-mysql-session/node_modules/
 /https/*
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

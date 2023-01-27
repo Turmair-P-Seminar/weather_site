@@ -1,3 +1,7 @@
+// DotEnv Config
+import 'dotenv/config';
+
+// Common Imports
 import fs from 'fs';
 import path from 'path';
 import http from 'http';
@@ -16,12 +20,10 @@ import helmet from "helmet";
 import csrf from "csurf";
 import bodyParser from "body-parser";
 import {addNonce} from "./src/middlewares/customMiddlewares.js";
+import {UsersDbConnector} from "./src/database-connections/UsersDbConnector.js";
 import {Knex} from "./mysql-connector.js";
 
 // Configuration below
-const hostname = '127.0.0.1';
-const port = 80; // Should be 3000 on linux (iptable routing). The Header upgrade below does not seem to be working with ports >999.
-const portSave = 443; // Should be 8433 on linux (iptable routing). The Header upgrade below does not seem to be working with ports >999.
 const supportedLanguages = ['en', 'de']; // First is fallback language.
 
 
@@ -36,19 +38,19 @@ const credentials = {key: privateKey, cert: certificate};
 
 // http Server. Only exists for session upgrade to https.
 http.createServer(function (req, res) {
-    res.writeHead(308, {'Location': `https://${hostname}:${portSave}` + req.url}); // 308 -> Moved permanently
+    res.writeHead(308, {'Location': `https://${process.env.HOSTNAME}:${process.env.PORT_HTTPS}` + req.url}); // 308 -> Moved permanently
     res.end();
-}).listen(port);
+}).listen(process.env.PORT_HTTP);
 
 // Creates the https server component
 const app = express();
-https.createServer(credentials, app).listen(portSave, function () {
-    console.log(`Server running at https://${hostname}:${portSave}/`);
+https.createServer(credentials, app).listen(process.env.PORT_HTTPS, function () {
+    console.log(`Server running at https://${process.env.HOSTNAME}:${process.env.PORT_HTTPS}/`);
 });
 // App config
 app.set("views", "views");
 app.set("view engine", "ejs");
-app.set("port", portSave)
+app.set("port", process.env.PORT_HTTPS)
 
 // The non-silver bullet
 app.use(addNonce);
@@ -66,15 +68,15 @@ app.use(express.static("res"));
 // Create a session handler
 const MemoryStore = createMemoryStore(session);
 const KnexStore = new KnexSessionStore({
-    knex: Knex,
+    knex: UsersDbConnector,
     disableDbCleanup: true,
     createtable: false
 });
 app.use(session({
-    store: new MemoryStore(session, {
-        checkPeriod: 3600000 // prune expired entries every hour
-    }),
-    //store: KnexStore,
+    // store: new MemoryStore(session, {
+    //     checkPeriod: 3600000 // prune expired entries every hour
+    // }),
+    store: KnexStore,
     cookie: {
         httpOnly: true,
         maxAge: 3600000, // 1 hour
