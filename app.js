@@ -26,7 +26,6 @@ import {Knex} from "./mysql-connector.js";
 // Configuration below
 const supportedLanguages = ['en', 'de']; // First is fallback language.
 
-
 const privateKey = fs.readFileSync('https/wetter-turmair-de.key', 'utf8');
 const certificate = fs.readFileSync('https/wetter-turmair-de.crt', 'utf8');
 // Configuration above
@@ -83,7 +82,7 @@ app.use(session({
         sameSite: true, // strict
         secure: true // https only
     },
-    secret: "This is NOT a secret", //TODO Move to an ENV variable
+    secret: "This is NOT a secret", //TODO Move to an ENV variable, make rotating
     resave: false,
     saveUninitialized: false // Who doesn't like EU laws?
 }));
