@@ -43,10 +43,8 @@
   },
   "footer":  {
     "title": "The P-Seminar of the JTG thanks you for visiting our homepage!",
-    "datenschutz": "privacy policy",
-    "nutzung": "terms of use",
-    "impressum": "imprint",
-    "paul": "Paul was here"
+    "nutzung": "Terms of Use",
+    "impressum": "Imprint and Privacy Policy"
   },
   "login": "Login",
   "logout": "Logout"
