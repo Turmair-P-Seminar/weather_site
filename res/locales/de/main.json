@@ -28,14 +28,13 @@
       "image": "Das JTG von vorne",
       "title": "Über uns",
       "text": "Im Rahmen des P-Seminars 'Wetterstation am JTG' haben wir im Schuljahr 2022/23 eine Wetterstation geplant, durch Sponsoring finanziert und gemeinsam Ende Oktober aufgestellt. Nun kann man auf dieser Website die aktuellen Wetterdaten der verschiedenen Sensoren auslesen und einen Überblick über das Wetter von den vergangenen fünf Tagen bekommen"
-          },
+    },
     "weather": {
       "title": "Aktuelle Sensorwerte",
       "erklaerung": "Hier befinden sich irgendwann mal die aktuellen Sensorwerte, aber nur vielleicht"
     }
   },
-  "messinstrument":
-  {
+  "messinstrument": {
     "thermometer": "Thermometer",
     "regenmesser": "Regenmesser",
     "hygrometer": "Hygrometer",
@@ -47,5 +46,6 @@
     "impressum": "Impressum und Datenschutzerklärung"
   },
   "login": "Anmelden",
-  "logout": "Abmelden"
+  "logout": "Abmelden",
+  "about": "ueberuns"
 }

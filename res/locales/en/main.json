@@ -34,8 +34,7 @@
       "erklaerung": "At some point, the current senor values will be found here, but only maybe"
     }
   },
-  "messinstrument":
-  {
+  "messinstrument": {
     "thermometer": "Thermometer",
     "regenmesser": "Rain gauge",
     "hygrometer": "Hygrometer",
@@ -47,5 +46,6 @@
     "impressum": "Imprint and Privacy Policy"
   },
   "login": "Login",
-  "logout": "Logout"
+  "logout": "Logout",
+  "about": "about"
 }

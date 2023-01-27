@@ -135,7 +135,7 @@
                 </select>
             </li>
             <li><a href="/<%=isLoggedIn ? "api/logout" : t('login', {postProcess: 'link'}) %>" class="button-top-right" id="login-li"><%=t(isLoggedIn ? 'logout' : 'login')%></a></li>
-            <li><a href="/about" class="button-top-right"><%=t('header.nav.about')%></a></li>
+            <li><a href="/<%= t('about', {postProcess: 'link'}) %>" class="button-top-right"><%=t('header.nav.about')%></a></li>
             <li><a href="/link3" class="button-top-right"><%=t('header.nav.link3')%></a></li>
         </ul>
     </div>

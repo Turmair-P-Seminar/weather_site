@@ -21,32 +21,29 @@ import csrf from "csurf";
 import bodyParser from "body-parser";
 import {addNonce} from "./src/middlewares/customMiddlewares.js";
 import {UsersDbConnector} from "./src/database-connections/UsersDbConnector.js";
-import {Knex} from "./mysql-connector.js";
 
-// Configuration below
+// Language Configuration
 const supportedLanguages = ['en', 'de']; // First is fallback language.
-
-const privateKey = fs.readFileSync('https/wetter-turmair-de.key', 'utf8');
-const certificate = fs.readFileSync('https/wetter-turmair-de.crt', 'utf8');
-// Configuration above
-
 export {supportedLanguages};
 
-// Credential store for https
+// Credentials for HTTPS
+const privateKey = fs.readFileSync(`https/${process.env.HTTPS_KEY_FILE}`, 'utf8');
+const certificate = fs.readFileSync(`https/${process.env.HTTPS_CRT_FILE}`, 'utf8');
 const credentials = {key: privateKey, cert: certificate};
 
-// http Server. Only exists for session upgrade to https.
+// HTTP Server. Only exists for redirect to HTTPS.
 http.createServer(function (req, res) {
     res.writeHead(308, {'Location': `https://${process.env.HOSTNAME}:${process.env.PORT_HTTPS}` + req.url}); // 308 -> Moved permanently
     res.end();
 }).listen(process.env.PORT_HTTP);
 
-// Creates the https server component
+// HTTPS Server.
 const app = express();
 https.createServer(credentials, app).listen(process.env.PORT_HTTPS, function () {
-    console.log(`Server running at https://${process.env.HOSTNAME}:${process.env.PORT_HTTPS}/`);
+    console.log(`Server running at https://${process.env.HOSTNAME}:${process.env.PORT_HTTPS}/.`);
 });
-// App config
+
+// Application Config
 app.set("views", "views");
 app.set("view engine", "ejs");
 app.set("port", process.env.PORT_HTTPS)
@@ -61,7 +58,7 @@ app.use(helmet({
     }
 }));
 
-// Static router. These files are send with a cache=true header and accessible for everyone.
+// Static router for resources. These files are send with a "cache=true" header and are accessible for everyone.
 app.use(express.static("res"));
 
 // Create a session handler
@@ -87,7 +84,7 @@ app.use(session({
     saveUninitialized: false // Who doesn't like EU laws?
 }));
 
-// i18next setup
+// i18next Setup
 i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).use({
     type: 'postProcessor',
     name: 'link',
@@ -112,7 +109,7 @@ i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).use({
     }
 });
 
-// csurf
+// csurf // TODO We should no longer use csurf
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(csrf({}))
 
