@@ -17,7 +17,7 @@ import Backend from "i18next-fs-backend";
 import {addRoutes} from './routes.js';
 import {router} from './api_routes.js'
 import helmet from "helmet";
-import csrf from "csurf";
+import {csrfSync} from "csrf-sync";
 import bodyParser from "body-parser";
 import {addNonce} from "./src/middlewares/customMiddlewares.js";
 import {UsersDbConnector} from "./src/database-connections/UsersDbConnector.js";
@@ -30,6 +30,25 @@ export {supportedLanguages};
 const privateKey = fs.readFileSync(`https/${process.env.HTTPS_KEY_FILE}`, 'utf8');
 const certificate = fs.readFileSync(`https/${process.env.HTTPS_CRT_FILE}`, 'utf8');
 const credentials = {key: privateKey, cert: certificate};
+
+// CSRF Protection Middleware Setup
+export const {
+    generateToken, // Use this to generate, store, and get a CSRF token.
+    revokeToken, // Revokes/deletes a token by calling storeTokenInState(undefined)
+    csrfSynchronisedProtection, // This is the default CSRF protection middleware.
+} = csrfSync({
+    ignoredMethods: ["GET", "HEAD", "OPTIONS"],
+    getTokenFromState: (req) => {
+        return req.session.csrfToken;
+    },
+    getTokenFromRequest: (req) =>  {
+        return req.body['CSRFToken'];
+    },
+    storeTokenInState: (req, token) => {
+        req.session.csrfToken = token;
+    },
+    size: 256
+});
 
 // HTTP Server. Only exists for redirect to HTTPS.
 http.createServer(function (req, res) {
@@ -111,7 +130,7 @@ i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).use({
 
 // csurf // TODO We should no longer use csurf
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(csrf({}))
+app.use(csrfSynchronisedProtection)
 
 // Apply i18n
 app.use(i18nextMiddleware.handle(i18n, {

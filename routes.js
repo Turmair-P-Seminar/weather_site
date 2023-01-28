@@ -1,3 +1,5 @@
+import {generateToken} from "./app.js";
+
 const addRoutes = function(i18nextMiddleware, i18n, supportedLanguages, app) { //TODO Fix this mess
     i18nextMiddleware.addRoute(i18n, '/:lng/path2/', supportedLanguages, app, 'get', function(req, res) { //route.products/route.harddrives/route.overview
         console.log(req.i18n.language);
@@ -39,7 +41,7 @@ function addDefaultConfig(req, res, obj) {
         ...obj,
         ...res.options,
         lang: req.i18n.language,
-        _csrfToken: req.csrfToken(),
+        csrfToken: generateToken(req),
         isLoggedIn: req.session.isLoggedIn
     };
 }
