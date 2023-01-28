@@ -159,13 +159,13 @@
                 yAxisID: 'left-y-axis',
                 data: [35, 26, 25, 30, 5, 7, -5],
                 fill: true,
-                tension: 0.25,
+                tension: 0.4,
                 backgroundColor: 'rgba(255,255,0,0.25)',
                 borderColor: 'rgba(255,0,0,1)'
             }, {
                 label: 'Niederschlag',
                 yAxisID: 'right-y-axis',
-                data: [1, 1, 100, 30, 0, 30, 5],
+                data: [0, 0, 200, 30, 0, 30, 5],
                 fill: {
                     target: 'origin',
                     below: 'rgba(0,0,0,0)',
@@ -177,7 +177,7 @@
             }]
         },
         options: {
-
+            cubicInterpolationMode: 'monotone',
             scales: {
                 'left-y-axis': {
                     type: 'linear',
