@@ -18,7 +18,7 @@ import {router} from './api_routes.js'
 import helmet from "helmet";
 import {csrfSync} from "csrf-sync";
 import bodyParser from "body-parser";
-import {addNonce} from "./src/middlewares/customMiddlewares.js";
+import {addTemplateVariables, addNonce} from "./src/middlewares/customMiddlewares.js";
 import {UsersDbConnector} from "./src/database-connections/UsersDbConnector.js";
 
 // Language Configuration
@@ -114,7 +114,7 @@ i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).use({
         ignoreCase: true,
         order: ['path', 'session', 'header']
     },
-    initImmediate: false, // setting initImediate to false, will load the resources synchronously
+    initImmediate: false, // setting initImmediate to false, will load the resources synchronously
     load: 'languageOnly',
     supportedLngs: supportedLanguages,
     nonExplicitSupportedLngs: true,
@@ -126,7 +126,7 @@ i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).use({
     }
 });
 
-// csurf // TODO We should no longer use csurf
+// csrf
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(csrfSynchronisedProtection)
 
@@ -152,6 +152,9 @@ app.use(function (req, res, next) { // TODO Make this 100% legal
 
 // Api routes
 app.use('/api', router);
+
+// Common Template Variables
+app.use(addTemplateVariables);
 
 // Add all other routes
 addRoutes(i18nextMiddleware, i18n, supportedLanguages, app);
