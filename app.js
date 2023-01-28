@@ -110,7 +110,6 @@ i18n.use(Backend).use(i18nextMiddleware.LanguageDetector).use({
         return value.toLowerCase();
     }
 }).init({
-    debug: true,
     detection: {
         ignoreCase: true,
         order: ['path', 'session', 'header']

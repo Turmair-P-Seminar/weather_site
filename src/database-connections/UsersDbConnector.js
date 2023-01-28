@@ -8,8 +8,7 @@ const UsersDbConnector = knex({
         user : process.env.UsersDbConnector_user,
         password : process.env.UsersDbConnector_password,
         database : process.env.UsersDbConnector_database
-    },
-    debug: true
+    }
 });
 
 export {UsersDbConnector};
