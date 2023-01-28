@@ -65,70 +65,10 @@ figure {
 
 li{float:left; margin-right: 20px;}
 
-/* Language Dropdown */
-.select2-container--default .select2-selection--single {
-    background-color: #FFFFFF00;
-    border: 0;
-    border-radius: 0;
-}
 
-body > div.navbar.navbar-default.navbar-static-top > div > ul > li:nth-child(1) > span {
-    width: auto !important;
-    display: inline;
-}
-
-#select2-language-container > span > p {
-    display: none;
-}
-
-body > span > span > span.select2-search.select2-search--dropdown {
-    display: none;
-}
-
-#select2-language-container {
-    line-height: 26px;
-    padding: 0 20px 0 0;
-}
-
-.select2-results__option {
-    margin: 0;
-    width: 100%;
-}
-
-.select2-results__option > span > p {
-    margin: 0;
-}
-
-.select2-dropdown {
-    width: auto !important;
-    top: 4px;
-    left: -52px !important;
-}
-
-.select2-results__option > span {
-    display: flex;
-    font-size: 20px;
-    font-family: OpenSans, sans-serif;
-}
-
-.select2-results__option > span > img {
-    padding-right: 4px;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__arrow b {
-    border-color: aliceblue transparent transparent transparent;
-}
-
-.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
-    border-color: transparent transparent aliceblue transparent;
-}
 
 /* For mobile phones: */
 .navbar-right {
-    display: none;
-}
-
-.select2-dropdown {
     display: none;
 }
 
@@ -223,7 +163,7 @@ body > span > span > span.select2-search.select2-search--dropdown {
 
 
 /* For desktop: */
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 950px) {
     .navbar-right {
         display: inline;
         list-style-type: none;

@@ -1,7 +1,7 @@
-import crypto from "crypto";
+import generateSecret from "../shared-functionality/generateSecret.js";
 
 export let addNonce = async (req, res, next) => {
-    res.options = {nonce: crypto.randomBytes(16).toString("hex")};
+    res.options = {nonce: generateSecret()};
     next();
 };
 

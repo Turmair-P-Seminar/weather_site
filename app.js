@@ -4,7 +4,6 @@ import 'dotenv/config';
 // Common Imports
 import fs from 'fs';
 import path from 'path';
-import http from 'http';
 import https from 'https';
 import express from 'express';
 import session from 'express-session';
@@ -50,11 +49,11 @@ export const {
     size: 256
 });
 
-// HTTP Server. Only exists for redirect to HTTPS.
-http.createServer(function (req, res) {
-    res.writeHead(308, {'Location': `https://${process.env.HOSTNAME}:${process.env.PORT_HTTPS}` + req.url}); // 308 -> Moved permanently
-    res.end();
-}).listen(process.env.PORT_HTTP);
+// HTTP Server. Only exists for redirect to HTTPS. // TODO It seems we don't need this
+// http.createServer(function (req, res) {
+//     res.writeHead(308, {'Location': `https://${process.env.HOSTNAME}:${process.env.PORT_HTTPS}` + req.url}); // 308 -> Moved permanently
+//     res.end();
+// }).listen(process.env.PORT_HTTP);
 
 // HTTPS Server.
 const app = express();

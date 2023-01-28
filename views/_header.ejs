@@ -7,11 +7,12 @@
     <link rel="icon" type="image/x-icon" href="/images/header/logo32.ico"/>
 
     <script type="text/javascript" src="/scripts/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="/scripts/select2.min.js"></script>
+    <script type="text/javascript" src="/scripts/selectize.min.js"></script>
 
-    <link rel="stylesheet" href="/style/select2.min.css"/>
+    <link rel="stylesheet" href="/style/selectize.bootstrap5.min.css"/>
     <link rel="stylesheet" href="/style/w3.css"/>
     <link rel="stylesheet" href="/style/header.css"/>
+    <link rel="stylesheet" href="/style/selectize-header.css"/>
     <link rel="stylesheet" href="/style/footer.css"/>
     <link rel="stylesheet" href="/style/sites/<%= site %>.css">
 
@@ -25,32 +26,48 @@
 
     <script type="text/javascript" nonce="<%= nonce %>">
         $(document).ready(function(){
-            $("#language").select2({
-                templateSelection: formatState,
-                templateResult: formatState
-            });
+            const COUNTRIES = <%- languages %>;
 
-            $('#language').on('select2:select', function (e) {
-                $.ajax({
-                    url: "/api/lang",
-                    type: "POST",
-                    data: {
-                        "lng": $("#language").val(),
-                        "CSRFToken": "<%= csrfToken %>"
+            const $select = $("#language").selectize({
+                openOnFocus: false,
+                onChange: function(value) {
+                    $.ajax({
+                        url: "/api/lang",
+                        type: "POST",
+                        data: {
+                            "lng": value,
+                            "CSRFToken": "<%= csrfToken %>"
+                        },
+                        dataType:"json",
+                        success: function () {location.reload();} // TODO Finish this
+                    });
+                },
+                maxItems: 1,
+                labelField: 'name',
+                valueField: 'code',
+                plugins: ['autofill_disable'],
+                searchField: ['name', 'code'],
+                options: COUNTRIES,
+                preload: true,
+                persist: false,
+                render: {
+                    item: function (item, escape) {
+                        return "<div><img src='/images/" + escape(item.code) + ".png' class='flag flag-" + escape(item.code) + "' alt='flag' /></div>";
                     },
-                    dataType:"json",
-                    success: function () {location.reload();} //TODO Finish this
-                });
+                    option: function (item, escape) {
+                        return "<div><img src='/images/" + escape(item.code) + ".png' class='flag flag-" + escape(item.code) + "' alt='flag' />&nbsp;" + escape(item.name) + "</div>";
+                    }
+                }
             });
-        });
+            const selectize = $select[0].selectize;
+            selectize.setValue("<%- lang %>", true);
 
-        function formatState (state) {
-            if (!state.id) { return state.text; }
-            var $state = $(
-                '<span ><img sytle="display: inline-block;" src="/images/' + state.element.value.toLowerCase() + '.png" /> ' + '<p>' + state.text + '</p>' + '</span>'
-            );
-            return $state;
-        }
+            const $element = document.evaluate("/html/body/div[1]/div/ul/li[1]/div/div[2]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+            $element.style.display = "block";
+            const w = $element.clientWidth;
+            $element.style.display = "none";
+            document.styleSheets[0].insertRule(".selectize-dropdown { left: -" + (w/2) + "px !important;}", 0);
+        });
     </script>
 </head>
 
@@ -116,21 +133,7 @@
         </script>
         <ul class="navbar-right" >
             <li>
-                <select id="language">
-                    <script type="text/javascript" nonce="<%= nonce %>">
-                        $.ajax({
-                            url: "/api/lang-available",
-                            type: "GET",
-                            dataType:"json",
-                            success: function(result) {
-                                const langs = new Map(Object.entries(result));
-                                langs.forEach(function (v, k) {
-                                    document.getElementById('language').insertAdjacentHTML("beforeend",`<option value=${k}>${v}</option>`);
-                                });
-                            }
-                        });
-                    </script>
-                </select>
+                <select id="language" placeholder="Choose your language"></select>
             </li>
             <li><a href="/<%=isLoggedIn ? "api/logout" : t('login', {postProcess: 'link'}) %>" class="button-top-right" id="login-li"><%=t(isLoggedIn ? 'logout' : 'login')%></a></li>
             <li><a href="/<%= t('about', {postProcess: 'link'}) %>" class="button-top-right"><%=t('header.nav.about')%></a></li>
