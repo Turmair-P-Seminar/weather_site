@@ -147,7 +147,7 @@ app.use(function (req, res, next) { // TODO Make this 100% legal
         req.session.lng = req.i18n.language; // The language information is needed to provide functionality, should be ok for EU law without user consent
     }
     console.log(req.session);
-    next()
+    next();
 })
 
 // Api routes

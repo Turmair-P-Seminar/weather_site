@@ -23,52 +23,6 @@
 
     <meta name="googlebot-image" content="noindex" />
     <meta name="MSNBot-Media" content="noindex" />
-
-    <script type="text/javascript" nonce="<%= nonce %>">
-        $(document).ready(function(){
-            const COUNTRIES = <%- languages %>;
-
-            const $select = $("#language").selectize({
-                openOnFocus: false,
-                onChange: function(value) {
-                    $.ajax({
-                        url: "/api/lang",
-                        type: "POST",
-                        data: {
-                            "lng": value,
-                            "CSRFToken": "<%= csrfToken %>"
-                        },
-                        dataType:"json",
-                        success: function () {location.reload();} // TODO Finish this
-                    });
-                },
-                maxItems: 1,
-                labelField: 'name',
-                valueField: 'code',
-                plugins: ['autofill_disable'],
-                searchField: ['name', 'code'],
-                options: COUNTRIES,
-                preload: true,
-                persist: false,
-                render: {
-                    item: function (item, escape) {
-                        return "<div><img src='/images/" + escape(item.code) + ".png' class='flag flag-" + escape(item.code) + "' alt='flag' /></div>";
-                    },
-                    option: function (item, escape) {
-                        return "<div><img src='/images/" + escape(item.code) + ".png' class='flag flag-" + escape(item.code) + "' alt='flag' />&nbsp;" + escape(item.name) + "</div>";
-                    }
-                }
-            });
-            const selectize = $select[0].selectize;
-            selectize.setValue("<%- lang %>", true);
-
-            const $element = document.evaluate("/html/body/div[1]/div/ul/li[1]/div/div[2]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-            $element.style.display = "block";
-            const w = $element.clientWidth;
-            $element.style.display = "none";
-            document.styleSheets[0].insertRule(".selectize-dropdown { left: -" + (w/2) + "px !important;}", 0);
-        });
-    </script>
 </head>
 
 <div class="navbar navbar-default navbar-static-top" role="navigation">
@@ -134,6 +88,49 @@
         <ul class="navbar-right" >
             <li>
                 <select id="language" placeholder="Choose your language"></select>
+                <script type="text/javascript" nonce="<%= nonce %>">
+                        const COUNTRIES = <%- languages %>;
+
+                        const $select = $("#language").selectize({
+                            openOnFocus: false,
+                            onChange: function(value) {
+                                $.ajax({
+                                    url: "/api/lang",
+                                    type: "POST",
+                                    data: {
+                                        "lng": value,
+                                        "CSRFToken": "<%= csrfToken %>"
+                                    },
+                                    dataType:"json",
+                                    success: function () {location.reload();} // TODO Finish this
+                                });
+                            },
+                            maxItems: 1,
+                            labelField: 'name',
+                            valueField: 'code',
+                            plugins: ['autofill_disable'],
+                            searchField: ['name', 'code'],
+                            options: COUNTRIES,
+                            preload: true,
+                            persist: false,
+                            render: {
+                                item: function (item, escape) {
+                                    return "<div><img src='/images/" + escape(item.code) + ".png' class='flag flag-" + escape(item.code) + "' alt='flag' /></div>";
+                                },
+                                option: function (item, escape) {
+                                    return "<div><img src='/images/" + escape(item.code) + ".png' class='flag flag-" + escape(item.code) + "' alt='flag' />&nbsp;" + escape(item.name) + "</div>";
+                                }
+                            }
+                        });
+                        const selectize = $select[0].selectize;
+                        selectize.setValue("<%- lang %>", true);
+
+                        const $element = document.evaluate("/html/body/div[1]/div/ul/li[1]/div/div[2]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                        $element.style.display = "block";
+                        const w = $element.clientWidth;
+                        $element.style.display = "none";
+                        document.styleSheets[0].insertRule(".selectize-dropdown { left: -" + (w/2) + "px !important;}", 0);
+                </script>
             </li>
             <li><a href="/<%=isLoggedIn ? "api/logout" : t('login', {postProcess: 'link'}) %>" class="button-top-right" id="login-li"><%=t(isLoggedIn ? 'logout' : 'login')%></a></li>
             <li><a href="/<%= t('about', {postProcess: 'link'}) %>" class="button-top-right"><%=t('header.nav.about')%></a></li>
