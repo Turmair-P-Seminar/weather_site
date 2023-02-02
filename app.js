@@ -21,6 +21,7 @@ import {csrfSync} from "csrf-sync";
 import bodyParser from "body-parser";
 import {addTemplateVariables, addNonce} from "./src/middlewares/customMiddlewares.js";
 import {UsersDbConnector} from "./src/database-connections/UsersDbConnector.js";
+import generateSecret from "./src/shared-functionality/generateSecret.js";
 
 // Language Configuration
 const supportedLanguages = ['en', 'de']; // First is fallback language.
@@ -98,7 +99,7 @@ app.use(session({
         sameSite: true, // strict
         secure: true // https only
     },
-    secret: "This is NOT a secret", //TODO Move to an ENV variable, make rotating
+    secret: generateSecret(64), // We should probably use a more secure approach to sessions
     resave: false,
     saveUninitialized: false // Who doesn't like EU laws?
 }));
