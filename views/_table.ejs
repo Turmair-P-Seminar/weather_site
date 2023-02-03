@@ -138,9 +138,9 @@
 
 
 
-<div id="Diagramme">
+<div id="Diagramme" style="position: relative; height:50vh; width:100vw">
 
-    <canvas id="myChart", height="100%"></canvas>
+    <canvas id="myChart"></canvas>
 
 </div>
 
@@ -148,83 +148,113 @@
 
 <script type="text/javascript" nonce="<%= nonce %>">
 
-
-    var canvas = document.getElementById('myChart');
-    new Chart(canvas, {
-        type: 'line',
-        data: {
-            labels: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
-            datasets: [{
-                label: 'Temperatur',
-                yAxisID: 'left-y-axis',
-                data: [35, 26, 25, 30, 5, 7, -5],
-                fill: true,
-                tension: 0.4,
-                backgroundColor: 'rgba(255,255,0,0.25)',
-                borderColor: 'rgba(255,0,0,1)'
-            }, {
-                label: 'Niederschlag',
-                yAxisID: 'right-y-axis',
-                data: [0, 0, 200, 30, 0, 30, 5],
-                fill: {
-                    target: 'origin',
-                    below: 'rgba(0,0,0,0)',
-                    above: 'rgba(0,0,255,0.25)'
-                },
-                tension: 0.1,
-                backgroundColor: 'rgba(0,0,255,0.25)',
-                borderColor: 'rgb(0,0,255)'
-            }]
+    $.ajax({
+        url: '/api/chartdata',
+        type: 'GET',
+        success: function(data) {
+            createChart(data);
         },
-        options: {
-            cubicInterpolationMode: 'monotone',
-            scales: {
-                'left-y-axis': {
-                    type: 'linear',
-                    position: 'left',
-                    ticks: {
-                        callback: function(value, index, values) {
-                            if (value > 40) {
-                                return null;
-                            }
-                            else {
-                                return value;
-                            }
-                        }
+        error: function(xhr, status, error) {
+            console.error('Error calling /api/chartdata: ', error);
+        }
+    });
 
-                    },
-                    max: 80,
-                    min: -10,
-                    stepSize: 10,
+    function createChart(data) {
+        // Define the values required in the actual chart creation.
+        let totalMin;
+        let totalMax;
 
+        // Precalculate heavy operations.
+        const rainValues = data.map(row => row.rain);
+        const tempValues = data.map(row => row.outTemp);
+        const maxRain = Math.max(...rainValues);
+        const minTemp = Math.min(...tempValues);
+        const maxTemp = Math.max(...tempValues);
 
+        const rawTotalMin = Math.min(0, (minTemp * 2)) - 0.1;
+        const rawTotalMax = Math.max(maxRain, (maxTemp * 2)) + 0.1;
 
-                },
-                'right-y-axis': {
-                    type: 'linear',
-                    position: 'right',
-                    ticks: {
-                        callback: function(value, index, values) {
-                            if (value < 0) {
-                                return null;
-                            }
-                            else {
-                                return value;
-                            }
+        // Find appropriate step size.
+        let step = 1; // 4
+        while (true) {
+            totalMin = Math.floor(rawTotalMin / step) * step;
+            totalMax = Math.ceil(rawTotalMax / step) * step;
+            const d = totalMax - totalMin;
 
-                        }},
-                    max: 160,
-                    min: -20,
-                    stepSize: 20,
-
-                }
+            if (d / step <= 10) {
+                break;
+            } else {
+                step = step * 2;
             }
         }
 
 
-    });
-
-
-
+        const canvas = document.getElementById('myChart');
+        new Chart(canvas, {
+            type: 'line',
+            data: {
+                labels: data.map(row => new Date(row.date).toLocaleDateString("<%= lang %>")),
+                datasets: [{
+                    label: 'Temperatur',
+                    yAxisID: 'left-y-axis',
+                    data: tempValues,
+                    fill: true,
+                    tension: 0.4,
+                    backgroundColor: 'rgba(255,255,0,0.25)',
+                    borderColor: 'rgba(255,0,0,1)'
+                }, {
+                    label: 'Niederschlag',
+                    yAxisID: 'right-y-axis',
+                    data: rainValues,
+                    fill: {
+                        target: 'origin',
+                        below: 'rgba(0,0,0,0)',
+                        above: 'rgba(0,0,255,0.25)'
+                    },
+                    tension: 0.1,
+                    backgroundColor: 'rgba(0,0,255,0.25)',
+                    borderColor: 'rgb(0,0,255)'
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                cubicInterpolationMode: 'monotone',
+                scales: {
+                    'left-y-axis': {
+                        type: 'linear',
+                        position: 'left',
+                        ticks: {
+                            callback: function(value, index, values) {
+                                if (value > 40) {
+                                    return null;
+                                } else {
+                                    return value;
+                                }
+                            },
+                            stepSize: step / 2
+                        },
+                        max: totalMax / 2,
+                        min: totalMin / 2
+                    },
+                    'right-y-axis': {
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            callback: function (value, index, values) {
+                                if (value < 0) {
+                                    return null;
+                                } else {
+                                    return value;
+                                }
+                            },
+                            stepSize: step
+                        },
+                        max: totalMax,
+                        min: totalMin
+                    }
+                }
+            }
+        });
+    }
 </script>
 

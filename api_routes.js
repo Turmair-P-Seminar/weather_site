@@ -4,6 +4,7 @@ import {supportedLanguages} from "./app.js";
 import {getPwd} from "./mysql-connector.js";
 import bcrypt from 'bcryptjs';
 import {requestLogin} from "./routes.js";
+import {PublicDataDbConnector} from "./src/database-connections/PublicDataDbConnector.js";
 
 // All paths provided by this router are prefixed by '/api'.
 const router = express.Router();
@@ -62,6 +63,20 @@ router.get('/logout', function (req, res) { // TODO Maybe this should be a POST 
     }
     req.session.destroy();
     return res.redirect(303, "/");
+});
+
+// Table Data Endpoint: Returns data required to create the chart
+router.get('/chartdata', function (req, res) {
+    PublicDataDbConnector.transaction(trx => {
+        return PublicDataDbConnector.raw(
+            'call weewx.getClimateData(?);',
+            [7]
+        ).then();
+    }).then(result => {
+        console.table(result[0][0]);
+        return res.status(200).json(result[0][0]);
+    });
+    //return res.status(200); //.json(Object.fromEntries(map1));
 });
 
 export { router };
