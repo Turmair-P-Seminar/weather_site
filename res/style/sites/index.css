@@ -1,0 +1,8 @@
+#image-container {
+    height: calc(100vh - 70px);
+}
+
+#image-container img {
+    height: 100%;
+    width: auto;
+}

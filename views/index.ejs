@@ -1,7 +1,9 @@
 <%- include ("_header.ejs"); %>
 <div class="container">
-    <img src="/images/jtgvorneklein.jpg" alt="<%=t('index.about.image')%>" style="width: 100%"/>
-    <!-- TODO Make this relative scaling better       -->
+    <div id="image-container">
+        <img src="/images/jtgvorneklein.jpg" alt="<%=t('index.about.image')%>"/>
+        <!-- TODO Replace this image with a new one -->
+    </div>
     <h4><%=t('index.about.title')%></h4>
         <p><%=t('index.about.text')%></p>
 </div>
