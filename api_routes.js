@@ -79,4 +79,16 @@ router.get('/chartdata', function (req, res) {
     //return res.status(200); //.json(Object.fromEntries(map1));
 });
 
+// Herausfinden der aktuellen Temperatur
+router.get('/temperatur', function (req, res) {
+    PublicDataDbConnector.transaction(trx => {
+        return PublicDataDbConnector.raw(
+            'call weewx.getTemperatur();',
+        ).then();
+    }).then(result => {
+        console.table(result[0][0]);
+        return res.status(200).json(result[0][0]);
+    });
+});
+
 export { router };

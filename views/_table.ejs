@@ -31,15 +31,16 @@
         height: 100%;
         left: 55%;
         max-width: 250px;
+        overflow: hidden;
 
     }
 
     #ThermometerFüllung {
         position: absolute;
-        bottom: 6%;
+
         background-color: chocolate;
         width: 95%;
-        height: calc((20% + 20%) * (14/10) + 1%);
+        bottom: 0%;
         left: 1%;
         z-index: -1;
     }
@@ -72,11 +73,11 @@
 
     #RegenmesserFüllung {
         position: absolute;
-        bottom: 7%;
+        bottom: 0%;
         background-color: deepskyblue;
         left: 5%;
         width: 90%;
-        height: calc(9% * (51/20));
+
         z-index: -1;
     }
 
@@ -92,7 +93,7 @@
         position: absolute;
         height: auto;
         width: 100%;
-        rotate: calc(3deg*84);
+
     }
 
     #Diagramme {
@@ -103,7 +104,6 @@
     }
 
    </style>
-
 
 
 <div id="aktuelleSensordaten">
@@ -120,21 +120,39 @@
 
     <div id="Luftfeuchte">
         <img src="/images/weather/hygrometer.png" id="Hygrometer" alt="<%=t('messinstrument.hygrometer')%>"/>
-        <img src="/images/weather/hygrometerZeiger.png" id="HygrometerZeiger" alt="<%=t('messinstrument.hygrometerzeiger')%>"/>
+        <img class="paul" src="/images/weather/hygrometerZeiger.png" id="HygrometerZeiger" alt="<%=t('messinstrument.hygrometerzeiger')%>"/>
     </div>
 
 </div>
 
-
-
 <script type="text/javascript" nonce="<%= nonce %>">
-    const screenWidth = screen.width;
-    if (screen.width < 500) {
-        const p = 300;
+
+    $.ajax({
+        url: '/api/temperatur',
+        type: 'GET',
+        success: function(data) {
+            changeHeight(data);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error calling /api/temperatur: ', error);
+        }
+    });
+
+    function changeHeight(data) {
+        const Thermofüllung = document.getElementById('ThermometerFüllung');
+        const FyouRegenmesser = document.getElementById('RegenmesserFüllung');
+        const Lastbutnotleast = document.getElementById('HygrometerZeiger');
+        const tempValues = data.map(row => row.outTemp);
+        const rainValues = data.map(row => row.rain);
+        const Huminity = (data.map(row => row.outHumidity)*3);
+
+        Thermofüllung.style.height = "calc((20% + " + tempValues + "%) * (14/10) + 7%)";
+        FyouRegenmesser.style.height = "calc(" + rainValues + "% * (51/20) + 7%)";
+        Lastbutnotleast.style.transform = "rotate(" + Huminity + "deg)";
     }
-    else {
-        const p = 100; }
 </script>
+
+
 
 
 
