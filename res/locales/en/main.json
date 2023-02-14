@@ -31,7 +31,7 @@
     },
     "weather": {
       "title": "Current sensor values",
-      "erklaerung": "At some point, the current senor values will be found here, but only maybe"
+      "erklaerung": "Here you can see the results of our weather station. At the top you can see the current values for temperature, precipitation and humidity displayed graphically. In the lower diagram you see the course of the daily average temperatures and precipitation of the last 7 days."
     }
   },
   "messinstrument": {

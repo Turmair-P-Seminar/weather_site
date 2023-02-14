@@ -8,12 +8,11 @@
         <p><%=t('index.about.text')%></p>
 </div>
 
-<%- include ("_table.ejs");%>
 <div class="container">
     <h4><%=t('index.weather.title')%></h4>
         <p><%=t('index.weather.erklaerung')%></p>
-        <img src="/images/wetterbeispiel.jpg" alt="Beispiel für eine Wettervorhersage" style="width: 100%">
-        <!-- TODO Make this relative scaling better       -->
+
 </div>
+<%- include ("_table.ejs");%>
 
 <%- include ("_footer.ejs"); %>

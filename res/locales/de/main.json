@@ -31,7 +31,8 @@
     },
     "weather": {
       "title": "Aktuelle Sensorwerte",
-      "erklaerung": "Hier befinden sich irgendwann mal die aktuellen Sensorwerte, aber nur vielleicht"
+      "erklaerung": "Hier sehen Sie die aktuellen Daten unserer Wetterstation. Oben sehen Sie die aktuellen Werte für Temperatur, Niederschlag und Luftfeuchte grafisch dargestellt. Im unteren Diagramm sehen Sie den Verlauf der Tagesdurchschnittstemperaturen und -niederschläge der letzten 7 Tage."
+
     }
   },
   "messinstrument": {
