@@ -56,5 +56,11 @@
   },
   "unfinished": {
     "title": "This page is not yet finished."
+  },
+  "useragrement": {
+    "title": "Useragrement",
+    "text1": "The data on this website",
+    "text2": "by",
+    "text3": "is licensed under"
   }
 }

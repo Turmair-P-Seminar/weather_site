@@ -57,5 +57,11 @@
   },
   "unfinished": {
     "title": "Diese Seite ist noch nicht fertiggestellt."
+  },
+  "useragrement": {
+    "title": "Nutzungsbedingung",
+    "text1": "Die Daten auf dieser Website",
+    "text2": "des",
+    "text3": "sind lizensiert nach"
   }
 }
