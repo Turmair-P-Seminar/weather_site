@@ -53,6 +53,8 @@
     "textmain": "The 'P-Seminar' Weather and Climate Station of the Johannes-Turmair-Gymnasium Straubing is a weather station project we started in early 2022. Each participant familiarized themselves with one aspect of weather measurement and later shared their knowledge with the entire group. We received valuable guidance from our partner, Mr. Bohmann, who presented his network of weather stations and helped us throughout the project. We divided into smaller groups, with tasks such as finding a location for the station and securing funding. Our progress was regularly shared with the group, and after securing sufficient funds, all components were ordered and the station was assembled. It was unveiled at an event attended by sponsors, media, and our partner, followed by a celebration in the canteen. We have now successfully set up data transfer from the station to a server, and share our findings with the world through this website.",
     "textgoal": "Our aim is to enhance weather predictions in Straubing and its surrounding areas through data collection, while also gaining insights into the effects of climate change.",
     "textthanks": "We are deeply grateful to all those who helped make this project a success, including our amazing sponsors, the city of Straubing, our supportive Principal, and our indispensable partner, Mr. Bohmann. We are especially thankful for Mr. Bohmann's invaluable contributions and unwavering support. Our thanks also go to our dedicated teacher, Mr. Greil, who was there to guide us every step of the way. Thank you all for your support!"
+  },
+  "unfinished": {
+    "title": "This page is not yet finished."
   }
-
 }
