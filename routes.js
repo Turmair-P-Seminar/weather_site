@@ -28,7 +28,7 @@ const addRoutes = function(i18nextMiddleware, i18n, supportedLanguages, app) { /
 
     i18nextMiddleware.addRoute(i18n, '/link3', supportedLanguages, app, 'get', function(req, res) {
         console.log(req.i18n.languages);
-        res.render("link3", addDefaultConfig(req, res,{title: getTitle(req, "link3"), site: "link3", nonce: res.locals.cspNonce}));
+        res.render("unfinished", addDefaultConfig(req, res,{title: getTitle(req, "link3"), site: "unfinished", nonce: res.locals.cspNonce}));
     });
 
     i18nextMiddleware.addRoute(i18n, '/register', supportedLanguages, app, 'get', function(req, res) {
