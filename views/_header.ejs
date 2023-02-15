@@ -38,8 +38,22 @@
 
         <figure class="weatherSmall">
             <img src="/images/weather/svg/cloud.webp" alt="<%=t('header.weather.alt_cloudy')%>" height="50px" id="weatherimage">
-            <figcaption class="logocaption alwaysShow">
-                27°C
+            <figcaption class="logocaption alwaysShow" id="tempCaption">
+                <script type="text/javascript" nonce="<%= nonce %>">
+                    $(document).ready(function() {
+                        $.ajax({
+                            url: '/api/temperatur',
+                            type: 'GET',
+                            success: function(data) {
+                                document.querySelector('#tempCaption').innerHTML = Math.round(data.map(row => row.outTemp) * 10) / 10 + "&#8451";
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error calling /api/temperatur: ', error);
+                            }
+                        });
+                    });
+                </script>
+                ~ &#8451
             </figcaption>
         </figure>
 
