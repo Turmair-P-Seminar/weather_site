@@ -66,29 +66,47 @@ router.get('/logout', function (req, res) { // TODO Maybe this should be a POST 
 });
 
 // Table Data Endpoint: Returns data required to create the chart
+    let cresult2= 0;
+
 router.get('/chartdata', function (req, res) {
-    PublicDataDbConnector.transaction(trx => {
-        return PublicDataDbConnector.raw(
-            'call weewx.getClimateData(?);',
-            [7]
-        ).then();
-    }).then(result => {
-        console.table(result[0][0]);
-        return res.status(200).json(result[0][0]);
-    });
-    //return res.status(200); //.json(Object.fromEntries(map1));
-});
+    if (cachetest + 120 >= now) {
+        return res.status(200).json(cresult2[0][0]);
+    } else {
+        PublicDataDbConnector.transaction(trx => {
+            return PublicDataDbConnector.raw(
+                'call weewx.getClimateData(?);',
+                [7]
+            ).then();
+        }).then(result => {
+            console.table(result[0][0]);
+            cresult2 = result;
+            return res.status(200).json(result[0][0]);
+        });
+        //return res.status(200); //.json(Object.fromEntries(map1));
+    }});
 
 // Herausfinden der aktuellen Temperatur
+    let cachetest = 0;
+    let cresult = 0;
+    let now = Math.floor(Date.now() / 1000);
 router.get('/temperatur', function (req, res) {
-    PublicDataDbConnector.transaction(trx => {
-        return PublicDataDbConnector.raw(
-            'call weewx.getTemperatur();',
-        ).then();
-    }).then(result => {
-        console.table(result[0][0]);
-        return res.status(200).json(result[0][0]);
-    });
-});
+    now = Math.floor(Date.now() / 1000);
+    if (cachetest + 120 >= now) {
+        return res.status(200).json(cresult[0][0]);
+    } else {
+        PublicDataDbConnector.transaction(trx => {
+            return PublicDataDbConnector.raw(
+                'call weewx.getTemperatur();',
+            ).then();
+        }).then(result => {
+            console.table(result[0][0]);
+            cresult = result;
+            cachetest = now;
+            return res.status(200).json(result[0][0]);
+
+        });
+
+    }});
+
 
 export { router };
