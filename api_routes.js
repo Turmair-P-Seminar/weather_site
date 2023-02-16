@@ -1,7 +1,7 @@
 // Imports
 import express from "express";
 import {supportedLanguages} from "./app.js";
-import {getPwd} from "./mysql-connector.js";
+import {getPwd} from "./src/database-connections/UsersDbConnector.js";
 import bcrypt from 'bcryptjs';
 import {requestLogin} from "./routes.js";
 import {PublicDataDbConnector} from "./src/database-connections/PublicDataDbConnector.js";

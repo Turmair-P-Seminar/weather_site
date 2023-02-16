@@ -1,16 +1,16 @@
 import knex from 'knex';
 
-const Knex = knex({
-    client: 'mysql2',
-    connection: {
-        host : 'nick1st.de',
-        port : 3306,
-        user : 'knex',
-        password : 'äÔë9²à¤yéøÌBçÑAsOã=¢', //TODO
-        database : 'users'
-    },
-    debug: true
-});
+// const Knex = knex({
+//     client: 'mysql2',
+//     connection: {
+//         host : 'nick1st.de',
+//         port : 3306,
+//         user : 'knex',
+//         password : 'äÔë9²à¤yéøÌBçÑAsOã=¢', //TODO
+//         database : 'users'
+//     },
+//     debug: true
+// });
 
 
 const changePwd = function(username, encodedPwd) {
