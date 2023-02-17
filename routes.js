@@ -33,12 +33,12 @@ const addRoutes = function(i18nextMiddleware, i18n, supportedLanguages, app) { /
 
     i18nextMiddleware.addRoute(i18n, '/register', supportedLanguages, app, 'get', function(req, res) {
         console.log(req.i18n.languages);
-        res.render("register", addDefaultConfig(req, res,{title: getTitle(req, "register"), site: "register", nonce: res.locals.cspNonce}));
+        res.render("unfinished", addDefaultConfig(req, res,{title: getTitle(req, "register"), site: "unfinished", nonce: res.locals.cspNonce}));
     });
 
     i18nextMiddleware.addRoute(i18n, '/change-password', supportedLanguages, app, 'get', function(req, res) {
         console.log(req.i18n.languages);
-        res.render("change-password", addDefaultConfig(req, res,{title: getTitle(req, "change-password"), site: "change-password", nonce: res.locals.cspNonce}));
+        res.render("unfinished", addDefaultConfig(req, res,{title: getTitle(req, "change-password"), site: "unfinished", nonce: res.locals.cspNonce}));
     });
 
     i18nextMiddleware.addRoute(i18n, '/nutzung', supportedLanguages, app, 'get', function(req, res) {
