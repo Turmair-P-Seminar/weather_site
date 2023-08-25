@@ -17,7 +17,7 @@
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
     "body-parser": "^1.20.1",
-    "chart.js": "^3.9.1",
+    "chart.js": "^4.4.0",
     "connect-session-knex": "^3.0.1",
     "csrf-sync": "^3.1.0",
     "dotenv": "^16.0.3",
